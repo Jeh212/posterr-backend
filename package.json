@@ -1,0 +1,22 @@
+{
+  "name": "posterr-backend",
+  "version": "1.0.0",
+  "description": "Strider Web Back-end Assessment - 2.3",
+  "main": "server.ts",
+  "repository": "https://github.com/Jeh212/posterr-backend.git",
+  "author": "jeancarlos.souzasilva@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules  src/server.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "git-commit-msg-linter": "^4.1.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}
