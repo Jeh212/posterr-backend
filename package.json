@@ -7,11 +7,20 @@
   "author": "jeancarlos.souzasilva@gmail.com",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules  src/server.ts"
+    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules  src/server.ts",
+    "test": "jest --no-cache --watchAll"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "git-commit-msg-linter": "^4.1.1",
+    "jest": "^27.5.1",
+    "prettier": "2.5.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
   },
