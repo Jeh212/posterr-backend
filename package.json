@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules  src/server.ts",
-    "test": "jest --no-cache --watchAll"
+    "test": "jest --no-cache --coverage --watchAll"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
