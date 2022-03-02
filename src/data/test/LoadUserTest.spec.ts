@@ -2,13 +2,13 @@ describe('LoadUserTest', () => {
   class LoadUserService {
     constructor(private readonly loadUser: ILoadUserRepository) {}
 
-    async execute(userId: string): Promise<IUser> {
+    async execute(userId: string): Promise<IUser | undefined> {
       return await this.loadUser.load(userId)
     }
   }
 
   interface ILoadUserRepository {
-    load(userId: string): Promise<IUser>
+    load(userId: string): Promise<IUser | undefined>
   }
 
   interface IUser {
@@ -24,9 +24,7 @@ describe('LoadUserTest', () => {
   }
 
   class LoadUserRepositoryMock implements ILoadUserRepository {
-    userId?: string
-
-    async load(userId: string): Promise<IUser> {
+    async load(userId: string): Promise<IUser | undefined> {
       const user = [
         {
           _id: '1',
@@ -64,8 +62,9 @@ describe('LoadUserTest', () => {
       ]
 
       const foundedUser = user.find(element => element._id === userId)
+
       if (!foundedUser) {
-        throw new Error()
+        throw new Error('not found')
       }
       return foundedUser
     }
@@ -88,5 +87,25 @@ describe('LoadUserTest', () => {
     }
     const user = await loadUserService.execute(userFake._id)
     expect(user).toEqual(userFake)
+  })
+
+  test('It should throw an Erro in case the user not found', async () => {
+    const loadUserRepository = new LoadUserRepositoryMock()
+    const loadUserService = new LoadUserService(loadUserRepository)
+
+    const userFake = {
+      _id: 'dont_exist',
+      name: 'John Uno',
+      joinDate: new Date(),
+      followers: [],
+      following: [],
+      posts: [],
+      postCounter: 0,
+      quotePost: [],
+      reTweets: []
+    }
+    const promise = loadUserService.execute(userFake._id)
+
+    await expect(promise).rejects.toThrow(new Error('not found'))
   })
 })
