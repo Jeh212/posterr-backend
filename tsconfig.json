@@ -1,27 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES2021",                                  
-    "lib": ["ES2021"],                                        
-    "module": "commonjs",                                
-    "rootDir": "./src",                                  
-    "baseUrl": "src",                                                                    
+    "target": "es5",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "baseUrl": "src",
     "typeRoots": [
       "./node_modules/@types",
       "."
-    ],                                  
+    ],
     "paths": {
       "@/*":["*"]
-    },  
-    "resolveJsonModule": true,                        
-    "allowJs": true,                                  
-    "outDir": "./dist",                                   
-    "esModuleInterop": true,                             
-    "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                      
-    "noImplicitAny": true,                            
-    "skipDefaultLibCheck": true,                      
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "noEmit": true                           
+    "noEmit": true
   },
   "include": [
     "src/**/*"
