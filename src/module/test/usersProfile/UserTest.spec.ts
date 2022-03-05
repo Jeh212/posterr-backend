@@ -88,4 +88,23 @@ describe('LoadUserTest', () => {
 
     expect(follow.id).toBe(follow.id)
   })
+
+  it('Should throw not to follow themselves', async () => {
+    const { sutUserService } = makeSut()
+    const { followSut } = makeFollowSut()
+
+    const userFake: User = {
+      name: 'John_test',
+      postCounter: 0
+    }
+
+    const { id: userId } = await sutUserService.createUser(userFake)
+
+    const follow = followSut.createFollowing({
+      userId,
+      followingId: userId
+    })
+
+    await expect(follow).rejects.toThrow(new Error('Cannot follow yourself'))
+  })
 })

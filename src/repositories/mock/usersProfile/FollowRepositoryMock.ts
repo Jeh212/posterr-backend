@@ -33,9 +33,11 @@ export class FollowRepositoryMock implements IFollowRepository {
     return { created_at, followerId, userId }
   }
 
-  // async getFollowing(followingId: string): Promise<Follower> {
-  //   return
-  // }
+  async getFollowing(followingId: string): Promise<Following | undefined> {
+    const user = this.following.find(element => element.id === followingId)
+
+    return user
+  }
 
   // async getFollower(followerId: string): Promise<Following> {
   //   return
