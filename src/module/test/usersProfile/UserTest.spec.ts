@@ -1,10 +1,16 @@
 import { User } from '@/entities/User'
+import { FollowingService } from '@/module/usecases/usersProfile'
 import { UserService } from '@/module/usecases/usersProfile/UserService'
+import { FollowRepositoryMock } from '@/repositories/mock/usersProfile/FollowRepositoryMock'
 import { LoadUserRepositoryMock } from '@/repositories/mock/usersProfile/UserRepositoryMock'
 
 type IMakeSut = {
   sutUserService: UserService
   userRepositoryMock: LoadUserRepositoryMock
+}
+type IFollowSut = {
+  followRepositoryMock: FollowRepositoryMock
+  followSut: FollowingService
 }
 describe('LoadUserTest', () => {
   const makeSut = (): IMakeSut => {
@@ -12,6 +18,12 @@ describe('LoadUserTest', () => {
     const sutUserService = new UserService(userRepositoryMock)
 
     return { userRepositoryMock, sutUserService }
+  }
+
+  const makeFollowSut = (): IFollowSut => {
+    const followRepositoryMock = new FollowRepositoryMock()
+    const followSut = new FollowingService(followRepositoryMock)
+    return { followRepositoryMock, followSut }
   }
 
   it('Should load a existing user information', async () => {
@@ -54,15 +66,26 @@ describe('LoadUserTest', () => {
     expect(newUser?.id).toBe(newUser.id)
   })
 
-  it('Should not follow themselves', async () => {
-    const { sutUserService, userRepositoryMock } = makeSut()
+  it('Should create a follow', async () => {
+    const { sutUserService } = makeSut()
+    const { followSut } = makeFollowSut()
 
     const userFake: User = {
       name: 'John_test',
       postCounter: 0
     }
+    const secondUserFake: User = {
+      name: 'new_dude',
+      postCounter: 0
+    }
+    const { id: userId } = await sutUserService.createUser(userFake)
+    const { id: followingId } = await sutUserService.createUser(secondUserFake)
 
-    const newUser = await sutUserService.createUser(userFake)
-    expect(newUser?.id).toBe(newUser.id)
+    const follow = await followSut.createFollowing({
+      userId,
+      followingId
+    })
+
+    expect(follow.id).toBe(follow.id)
   })
 })
