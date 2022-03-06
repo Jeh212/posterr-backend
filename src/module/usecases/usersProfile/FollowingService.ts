@@ -25,10 +25,12 @@ export class FollowingService {
       followingId
     )
     if (findFollowingUser) {
-      const unfollow = await this.followRepositoryMock.removeFollow(followingId)
+      const unfollow = await this.followRepositoryMock.removeFollowing(
+        followingId
+      )
       return unfollow
     } else {
-      throw Error('User not Found')
+      throw new Error('User not Found')
     }
   }
 

@@ -12,7 +12,7 @@ type IFollowSut = {
   followRepositoryMock: FollowRepositoryMock
   followSut: FollowingService
 }
-describe('LoadUserTest', () => {
+describe('UserAndFollowingTest', () => {
   const makeSut = (): IMakeSut => {
     const userRepositoryMock = new LoadUserRepositoryMock()
     const sutUserService = new UserService(userRepositoryMock)
@@ -129,7 +129,30 @@ describe('LoadUserTest', () => {
     const unfollow = await followSut.unFollow(followingId)
     expect(unfollow).toBe(followingId)
   })
+  it('Should throw not found to unfollow a user', async () => {
+    const { sutUserService } = makeSut()
+    const { followSut } = makeFollowSut()
 
+    const userFake: User = {
+      name: 'John_test',
+      postCounter: 0
+    }
+    const secondUserFake: User = {
+      id: 'other_id',
+      name: 'new_dude',
+      postCounter: 0
+    }
+    const { id: userId } = await sutUserService.createUser(userFake)
+    const { id: followingId } = await sutUserService.createUser(secondUserFake)
+
+    await followSut.createFollowing({
+      userId,
+      followingId: '123'
+    })
+    const unfollow = followSut.unFollow(followingId)
+
+    await expect(unfollow).rejects.toThrow(new Error('User not Found'))
+  })
   it('Should list following users', async () => {
     const { sutUserService } = makeSut()
     const { followSut } = makeFollowSut()
@@ -142,7 +165,7 @@ describe('LoadUserTest', () => {
 
     for (let i = 0; i < 5; i++) {
       const fakeUser: User = {
-        name: `John_test${i}`,
+        name: `Usuário: ${i}`,
         postCounter: 0
       }
 
