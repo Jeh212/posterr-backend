@@ -12,5 +12,6 @@ export interface IFollowRepository {
   }: Follower) => Promise<Follower>
 
   getFollowing: (followingId: string) => Promise<Following | undefined>
-  // getFollower: (followerId: string) => Promise<Follower>
+  removeFollow: (followingId: string) => Promise<string>
+  listFollowing: (userId: string) => Promise<Following[] | undefined>
 }

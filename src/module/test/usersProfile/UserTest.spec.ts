@@ -26,6 +26,17 @@ describe('LoadUserTest', () => {
     return { followRepositoryMock, followSut }
   }
 
+  it('Should create a new User', async () => {
+    const { sutUserService, userRepositoryMock } = makeSut()
+
+    const userFake: User = {
+      name: 'John_test',
+      postCounter: 0
+    }
+
+    const newUser = await sutUserService.createUser(userFake)
+    expect(newUser?.id).toBe(newUser.id)
+  })
   it('Should load a existing user information', async () => {
     const { sutUserService } = makeSut()
 
@@ -52,18 +63,6 @@ describe('LoadUserTest', () => {
     const promise = sutUserService.loadUser(userFake.id)
 
     await expect(promise).rejects.toThrow(new Error('not found'))
-  })
-
-  it('Should create a new User', async () => {
-    const { sutUserService, userRepositoryMock } = makeSut()
-
-    const userFake: User = {
-      name: 'John_test',
-      postCounter: 0
-    }
-
-    const newUser = await sutUserService.createUser(userFake)
-    expect(newUser?.id).toBe(newUser.id)
   })
 
   it('Should create a follow', async () => {
@@ -106,5 +105,53 @@ describe('LoadUserTest', () => {
     })
 
     await expect(follow).rejects.toThrow(new Error('Cannot follow yourself'))
+  })
+
+  it('Should unfollow a user', async () => {
+    const { sutUserService } = makeSut()
+    const { followSut } = makeFollowSut()
+
+    const userFake: User = {
+      name: 'John_test',
+      postCounter: 0
+    }
+    const secondUserFake: User = {
+      name: 'new_dude',
+      postCounter: 0
+    }
+    const { id: userId } = await sutUserService.createUser(userFake)
+    const { id: followingId } = await sutUserService.createUser(secondUserFake)
+
+    await followSut.createFollowing({
+      userId,
+      followingId
+    })
+    const unfollow = await followSut.unFollow(followingId)
+    expect(unfollow).toBe(followingId)
+  })
+
+  it('Should list following users', async () => {
+    const { sutUserService } = makeSut()
+    const { followSut } = makeFollowSut()
+
+    const MainuserFake: User = {
+      name: 'John_test',
+      postCounter: 0
+    }
+    const { id: userId } = await sutUserService.createUser(MainuserFake)
+
+    for (let i = 0; i < 5; i++) {
+      const fakeUser: User = {
+        name: `John_test${i}`,
+        postCounter: 0
+      }
+
+      const { id: followingId } = await sutUserService.createUser(fakeUser)
+      await followSut.createFollowing({ userId, followingId })
+    }
+
+    const listFollowing = await followSut.listFollowing(userId)
+
+    expect(listFollowing?.length).toBeGreaterThan(0)
   })
 })

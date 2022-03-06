@@ -33,13 +33,25 @@ export class FollowRepositoryMock implements IFollowRepository {
     return { created_at, followerId, userId }
   }
 
-  async getFollowing(followingId: string): Promise<Following | undefined> {
-    const user = this.following.find(element => element.id === followingId)
-
+  async getFollowing(followingId?: string): Promise<Following | undefined> {
+    const user = this.following.find(
+      (element: Following) => element.followingId === followingId
+    )
     return user
   }
 
-  // async getFollower(followerId: string): Promise<Following> {
-  //   return
-  // }
+  async removeFollow(followingId?: string): Promise<string> {
+    this.following.pop()
+    return `${followingId}`
+  }
+
+  async listFollowing(userId?: string): Promise<Following[] | undefined> {
+    const list: Following[] = []
+
+    this.following.forEach((element: Following) => {
+      if (element.userId === userId) list.push(element)
+    })
+
+    return list
+  }
 }
