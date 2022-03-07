@@ -8,17 +8,6 @@ Feature: Shows data about the user PROFILE
     When the page loads
     Then needs to see the user information.
 
-  Scenario: Load 5 recents user POSTS
-
-    Given that the user want to see the profile
-    When the information about user loaded
-    Then i want to see the most 5 recents posts.
-
-  Scenario: Load 5 older user POSTS
-
-    Given that my profile loaded
-    When the newest 5 posts was loaded
-    Then i want to see my 5 older posts.
 
   Scenario: Follow a user
 

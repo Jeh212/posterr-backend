@@ -1,106 +1,118 @@
 import { IPost } from '@/entities/protocols/IPost'
 import { IPostRepositories } from '@/repositories/protocols/posts/repositories'
+import { v4 as uuid } from 'uuid'
 
 export class PostRepositoriesMock implements IPostRepositories {
-  private readonly posts: IPost[] = [
-    {
-      _id: '456',
-      created_at: new Date('2021-07-11T12:00:00+01:00'),
-      postContent: 'Great Day',
-      userId: '1'
-    },
-    {
-      _id: '457',
-      created_at: new Date('2021-07-10T12:00:00+01:00'),
-      postContent: 'Sunny Day',
-      userId: '1'
-    },
-    {
-      _id: '458',
-      created_at: new Date('2022-07-09T01:00:00+01:00'),
-      postContent: 'Rainny Day',
-      userId: '1'
-    },
-    {
-      _id: '459',
-      created_at: new Date('2022-07-08T01:00:00+01:00'),
-      postContent: 'Horrible Day',
-      userId: '1'
-    },
-    {
-      _id: '460',
-      created_at: new Date('2022-07-07T01:00:00+01:00'),
-      postContent: 'Sad Day',
-      userId: '1'
-    },
-    {
-      _id: '461',
-      created_at: new Date('2021-07-06T12:00:00+01:00'),
-      postContent: 'Great Day',
-      userId: '1'
-    },
-    {
-      _id: '462',
-      created_at: new Date('2021-07-05T12:00:00+01:00'),
-      postContent: 'Sunny Day',
-      userId: '1'
-    },
-    {
-      _id: '463',
-      created_at: new Date('2022-07-04T01:00:00+01:00'),
-      postContent: 'Rainny Day',
-      userId: '1'
-    },
-    {
-      _id: '464',
-      created_at: new Date('2022-07-03T01:00:00+01:00'),
-      postContent: 'Horrible Day',
-      userId: '1'
-    },
-    {
-      _id: '341',
-      created_at: new Date('2022-07-02T01:00:00+01:00'),
-      postContent: 'Sad Day',
-      userId: '1'
-    },
-    {
-      _id: '501',
-      created_at: new Date('2021-07-01T12:00:00+01:00'),
-      postContent: 'Great Day',
-      userId: '1'
-    },
-    {
-      _id: '104',
-      created_at: new Date('2021-06-31T12:00:00+01:00'),
-      postContent: 'Sunny Day',
-      userId: '1'
-    },
-    {
-      _id: '163',
-      created_at: new Date('2022-06-29T01:00:00+01:00'),
-      postContent: 'Rainny Day',
-      userId: '1'
-    },
-    {
-      _id: '888',
-      created_at: new Date('2022-06-28T01:00:00+01:00'),
-      postContent: 'Horrible Day',
-      userId: '1'
-    },
-    {
-      _id: '900',
-      created_at: new Date('2022-06-27T01:00:00+01:00'),
-      postContent: 'Sad Day',
-      userId: '1'
-    }
-  ]
+  private readonly posts: IPost[] = []
 
-  async loadRecentPosts(userId: string): Promise<IPost | undefined> {
-    const findUsePosts = this.posts.find(element => element._id === userId)
+  async createPost(post: IPost): Promise<IPost> {
+    Object.assign(post, {
+      id: uuid(),
+      created_at: new Date()
+    })
+    this.posts.push(post)
 
-    return
+    return post
   }
-  async loadOlderPosts(userId: string): Promise<IPost | undefined> {
-    return
+
+  async loadRecentPosts(userId: string): Promise<IPost[] | undefined> {
+    const recentPost = [
+      {
+        postContent: 'My Second post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-06T02:31:55.420Z'
+      },
+      {
+        postContent: 'My first post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-07T02:31:55.420Z'
+      },
+      {
+        postContent: 'My fourth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-04T02:31:55.420Z'
+      },
+      {
+        postContent: 'My third post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-05T02:31:55.420Z'
+      },
+      {
+        postContent: 'My fifth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-03T02:31:55.420Z'
+      },
+      {
+        postContent: 'My sixth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-02T02:31:55.420Z'
+      },
+      {
+        postContent: 'My sventh post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-01T02:31:55.420Z'
+      }
+    ]
+
+    const fiveRecentPost = recentPost.splice(0, 5)
+
+    return fiveRecentPost
+  }
+  async loadOlderPosts(userId: string): Promise<IPost[] | undefined> {
+    const recentPost = [
+      {
+        postContent: 'My Second post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-02-06T02:31:55.420Z'
+      },
+      {
+        postContent: 'My first post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-02-07T02:31:55.420Z'
+      },
+      {
+        postContent: 'My fourth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-04T02:31:55.420Z'
+      },
+      {
+        postContent: 'My third post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-05T02:31:55.420Z'
+      },
+      {
+        postContent: 'My fifth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-03T02:31:55.420Z'
+      },
+      {
+        postContent: 'My sixth post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-02T02:31:55.420Z'
+      },
+      {
+        postContent: 'My sventh post',
+        userId: 'b056d610-6bfe-4956-b88d-83609fcef908',
+        id: '96559b30-aaf0-4ae6-b148-3f83e6490fae',
+        created_at: '2022-03-01T02:31:55.420Z'
+      }
+    ]
+
+    const fiveOlderPost = recentPost.splice(0, 5)
+
+    return fiveOlderPost
   }
 }

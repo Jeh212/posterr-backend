@@ -1,6 +1,7 @@
 import { IPost } from '@/entities/protocols/IPost'
 
 export interface IPostRepositories {
-  loadRecentPosts: (userId: string) => Promise<IPost | undefined>
-  loadOlderPosts: (userId: string) => Promise<IPost | undefined>
+  createPost: ({ id, created_at, postContent, userId }: IPost) => Promise<IPost>
+  loadRecentPosts: (userId: string) => Promise<IPost[] | undefined>
+  loadOlderPosts: (userId: string) => Promise<IPost[] | undefined>
 }
