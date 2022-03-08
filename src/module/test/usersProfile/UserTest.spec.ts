@@ -30,6 +30,7 @@ describe('UserAndFollowingTest', () => {
     const { sutUserService, userRepositoryMock } = makeSut()
 
     const userFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -41,14 +42,15 @@ describe('UserAndFollowingTest', () => {
     const { sutUserService } = makeSut()
 
     const userFake: User = {
+      id: '',
       name: 'John Uno',
       postCounter: 0
     }
-    const newUser = await sutUserService.createUser(userFake)
+    const { id: userId } = await sutUserService.createUser(userFake)
 
-    const user = await sutUserService.loadUser(newUser.id)
+    const user = await sutUserService.loadUser(userId)
 
-    expect(newUser.id).toBe(user?.id)
+    expect(userId).toBe(user?.id)
   })
 
   it('Should throw an Erro in case the user not found', async () => {
@@ -62,7 +64,7 @@ describe('UserAndFollowingTest', () => {
     }
     const promise = sutUserService.loadUser(userFake.id)
 
-    await expect(promise).rejects.toThrow(new Error('not found'))
+    await expect(promise).rejects.toEqual(new Error('not found'))
   })
 
   it('Should create a follow', async () => {
@@ -70,10 +72,12 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
     const secondUserFake: User = {
+      id: '',
       name: 'new_dude',
       postCounter: 0
     }
@@ -93,6 +97,7 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -112,10 +117,12 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
     const secondUserFake: User = {
+      id: '',
       name: 'new_dude',
       postCounter: 0
     }
@@ -134,6 +141,7 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -158,6 +166,7 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const MainuserFake: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -165,6 +174,7 @@ describe('UserAndFollowingTest', () => {
 
     for (let i = 0; i < 5; i++) {
       const fakeUser: User = {
+        id: '',
         name: `Usuário: ${i}`,
         postCounter: 0
       }
@@ -176,5 +186,25 @@ describe('UserAndFollowingTest', () => {
     const listFollowing = await followSut.listFollowing(userId)
 
     expect(listFollowing?.length).toBeGreaterThan(0)
+  })
+
+  it('Should max  5 post a day', async () => {
+    const { sutUserService } = makeSut()
+
+    const userFake: User = {
+      id: '',
+      name: 'John_test',
+      postCounter: 0
+    }
+
+    const newUser = await sutUserService.createUser(userFake)
+
+    const calledMethod = jest.spyOn(sutUserService, 'updatePostCounter')
+
+    for (let i = 0; i < 5; i++) {
+      await sutUserService.updatePostCounter(newUser.postCounter, newUser?.id)
+    }
+
+    expect(calledMethod).toBeCalledTimes(5)
   })
 })

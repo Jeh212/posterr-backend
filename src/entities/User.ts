@@ -2,7 +2,7 @@ class User {
   id?: string
   name?: string
   joinDate?: Date
-  postCounter?: number
+  postCounter: any
 
   private constructor({ joinDate, name, postCounter }: User) {
     return Object.assign(this, {

@@ -23,4 +23,23 @@ export class LoadUserRepositoryMock implements IUserRepository {
 
     return { id, joinDate, name, postCounter }
   }
+
+  async updatePostCounter(postCounter: number, id?: string): Promise<number> {
+    const user = this.users.find(element => {
+      if (element.id === id) {
+        return element
+      }
+    })
+
+    this.users.push({
+      ...user,
+      postCounter: user?.postCounter + 1
+    })
+
+    this.users.shift()
+
+    const [updatedValue] = this.users
+
+    return updatedValue.postCounter
+  }
 }

@@ -1,12 +1,12 @@
 import { IPost } from '@/entities/protocols/IPost'
-import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
+import { IPostRepositories } from '@/repositories/protocols/posts/repositories'
 import { compareOlderDate, compareRecentDate } from '@/utils/dataFormater'
 
 export class PostServices {
-  constructor(private readonly postRepositoriesMock: PostRepositoriesMock) {}
+  constructor(private readonly postRepositories: IPostRepositories) {}
 
   async createPost(post: IPost): Promise<IPost> {
-    const createPost = await this.postRepositoriesMock.createPost(post)
+    const createPost = await this.postRepositories.createPost(post)
 
     return createPost
   }
@@ -14,7 +14,7 @@ export class PostServices {
     if (!userId) {
       throw new Error('User id required')
     }
-    const loadPost = await this.postRepositoriesMock.loadRecentPosts(userId)
+    const loadPost = await this.postRepositories.loadRecentPosts(userId)
 
     const sortedPost = compareRecentDate(loadPost)
 
@@ -24,7 +24,7 @@ export class PostServices {
     if (!userId) {
       throw new Error('User id required')
     }
-    const loadPost = await this.postRepositoriesMock.loadOlderPosts(userId)
+    const loadPost = await this.postRepositories.loadOlderPosts(userId)
 
     const sortedPost = compareOlderDate(loadPost)
 

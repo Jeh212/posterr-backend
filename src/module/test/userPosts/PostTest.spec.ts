@@ -24,6 +24,7 @@ describe('PostTest', () => {
 
   const postSut = (): PostSut => {
     const postRepoMock = new PostRepositoriesMock()
+
     const sutPostServices = new PostServices(postRepoMock)
 
     return {
@@ -39,6 +40,7 @@ describe('PostTest', () => {
     const { sutUserService, userRepositoryMock } = makeSut()
 
     const defaultUser: User = {
+      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -52,6 +54,7 @@ describe('PostTest', () => {
 
     const { id: userId } = await defaultUser()
     const post: IPost = {
+      id: '',
       postContent: 'My first post',
       userId,
       created_at: ''
