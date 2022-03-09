@@ -1,6 +1,6 @@
 import { User } from '@/entities/User'
-import { FollowingService } from '@/module/usecases/usersProfile'
-import { UserService } from '@/module/usecases/usersProfile/UserService'
+import { FollowingService } from '@/module/usecases/users'
+import { UserService } from '@/module/usecases/users/UserService'
 import { FollowRepositoryMock } from '@/repositories/mock/users/FollowRepositoryMock'
 import { LoadUserRepositoryMock } from '@/repositories/mock/users/UserRepositoryMock'
 

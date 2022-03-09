@@ -1,6 +1,6 @@
 import { Post } from '@/entities/Post'
 import { User } from '@/entities/User'
-import { PostServices, UserService } from '@/module/usecases/usersProfile'
+import { PostServices, UserService } from '@/module/usecases/users'
 import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
 import { LoadUserRepositoryMock } from '@/repositories/mock/users'
 
