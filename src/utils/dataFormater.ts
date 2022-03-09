@@ -7,7 +7,7 @@ export function dateFormater(date: Date) {
   return newDate
 }
 
-export function compareRecentDate(data: Post[]): Post[] {
+export function compareRecentDate(data?: Post[]): Post[] {
   const sorted: Post[] = _.orderBy(
     data,
     [element => new Date(element.created_at)],
@@ -17,7 +17,7 @@ export function compareRecentDate(data: Post[]): Post[] {
   return sorted
 }
 
-export function compareOlderDate(data: Post[]): Post[] {
+export function compareOlderDate(data?: Post[]): Post[] {
   const sorted: Post[] = _.orderBy(
     data,
     [element => new Date(element.created_at)],

@@ -1,5 +1,5 @@
 import { User } from '@/entities/User'
-import { IUserRepository } from '@/repositories/protocols/usersProfile/repositories/IUserRepository'
+import { IUserRepository } from '@/repositories/protocols/users/repositories/IUserRepository'
 import { dateFormater } from '@/utils/dataFormater'
 import { v4 as uuid } from 'uuid'
 

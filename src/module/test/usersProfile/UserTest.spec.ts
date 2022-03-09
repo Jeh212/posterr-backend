@@ -1,8 +1,8 @@
 import { User } from '@/entities/User'
 import { FollowingService } from '@/module/usecases/usersProfile'
 import { UserService } from '@/module/usecases/usersProfile/UserService'
-import { FollowRepositoryMock } from '@/repositories/mock/usersProfile/FollowRepositoryMock'
-import { LoadUserRepositoryMock } from '@/repositories/mock/usersProfile/UserRepositoryMock'
+import { FollowRepositoryMock } from '@/repositories/mock/users/FollowRepositoryMock'
+import { LoadUserRepositoryMock } from '@/repositories/mock/users/UserRepositoryMock'
 
 type IMakeSut = {
   sutUserService: UserService

@@ -1,7 +1,7 @@
 class Post {
   id?: string
 
-  created_at: Date | String
+  created_at: string
 
   postContent?: string
 

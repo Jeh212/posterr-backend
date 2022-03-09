@@ -2,7 +2,7 @@ import { Post } from '@/entities/Post'
 import { User } from '@/entities/User'
 import { PostServices, UserService } from '@/module/usecases/usersProfile'
 import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
-import { LoadUserRepositoryMock } from '@/repositories/mock/usersProfile'
+import { LoadUserRepositoryMock } from '@/repositories/mock/users'
 
 describe('PostTest', () => {
   type PostSut = {

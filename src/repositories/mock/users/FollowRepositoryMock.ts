@@ -1,4 +1,4 @@
-import { IFollowRepository } from '@/repositories/protocols/usersProfile/repositories'
+import { IFollowRepository } from '@/repositories/protocols/users/repositories'
 import { dateFormater } from '@/utils/dataFormater'
 import { v4 as uuid } from 'uuid'
 

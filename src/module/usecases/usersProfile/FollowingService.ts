@@ -1,4 +1,4 @@
-import { FollowRepositoryMock } from '@/repositories/mock/usersProfile/FollowRepositoryMock'
+import { FollowRepositoryMock } from '@/repositories/mock/users/FollowRepositoryMock'
 
 export class FollowingService {
   constructor(private readonly followRepositoryMock: FollowRepositoryMock) {}
