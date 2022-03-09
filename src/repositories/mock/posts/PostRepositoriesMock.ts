@@ -1,11 +1,11 @@
-import { IPost } from '@/entities/protocols/IPost'
+import { Post } from '@/entities/Post'
 import { IPostRepositories } from '@/repositories/protocols/posts/repositories'
 import { v4 as uuid } from 'uuid'
 
 export class PostRepositoriesMock implements IPostRepositories {
-  private readonly posts: IPost[] = []
+  private readonly posts: Post[] = []
 
-  async createPost(post: IPost): Promise<IPost> {
+  async createPost(post: Post): Promise<Post> {
     Object.assign(post, {
       id: uuid(),
       created_at: new Date()
@@ -15,7 +15,7 @@ export class PostRepositoriesMock implements IPostRepositories {
     return post
   }
 
-  async loadRecentPosts(userId: string): Promise<IPost[] | undefined> {
+  async loadRecentPosts(userId: string): Promise<Post[] | undefined> {
     const recentPost = [
       {
         postContent: 'My Second post',
@@ -66,7 +66,7 @@ export class PostRepositoriesMock implements IPostRepositories {
     return fiveRecentPost
   }
 
-  async loadOlderPosts(userId: string): Promise<IPost[] | undefined> {
+  async loadOlderPosts(userId: string): Promise<Post[] | undefined> {
     const recentPost = [
       {
         postContent: 'My Second post',

@@ -1,4 +1,4 @@
-import { IPost } from '@/entities/protocols/IPost'
+import { Post } from '@/entities/Post'
 import { User } from '@/entities/User'
 import { PostServices, UserService } from '@/module/usecases/usersProfile'
 import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
@@ -53,7 +53,7 @@ describe('PostTest', () => {
     const { sutPostServices } = postSut()
 
     const { id: userId } = await defaultUser()
-    const post: IPost = {
+    const post: Post = {
       id: '',
       postContent: 'My first post',
       userId,

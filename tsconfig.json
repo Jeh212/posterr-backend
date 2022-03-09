@@ -20,7 +20,8 @@
     "noImplicitAny": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "strictPropertyInitialization":false
   },
   "include": [
     "src/**/*"

@@ -1,16 +1,16 @@
-import { IPost } from '@/entities/protocols/IPost'
+import { Post } from '@/entities/Post'
 import { IPostRepositories } from '@/repositories/protocols/posts/repositories'
 import { compareOlderDate, compareRecentDate } from '@/utils/dataFormater'
 
 export class PostServices {
   constructor(private readonly postRepositories: IPostRepositories) {}
 
-  async createPost(post: IPost): Promise<IPost> {
+  async createPost(post: Post): Promise<Post> {
     const createPost = await this.postRepositories.createPost(post)
 
     return createPost
   }
-  async loadRecentPosts(userId: string): Promise<IPost[] | undefined> {
+  async loadRecentPosts(userId: string): Promise<Post[] | undefined> {
     if (!userId) {
       throw new Error('User id required')
     }
@@ -20,7 +20,7 @@ export class PostServices {
 
     return sortedPost
   }
-  async loadOlderPosts(userId: string): Promise<IPost[] | undefined> {
+  async loadOlderPosts(userId: string): Promise<Post[] | undefined> {
     if (!userId) {
       throw new Error('User id required')
     }

@@ -1,7 +1,7 @@
-import { IPost } from '@/entities/protocols/IPost'
+import { Post } from '@/entities/Post'
 
 export interface IPostRepositories {
-  createPost: ({ id, created_at, postContent, userId }: IPost) => Promise<IPost>
-  loadRecentPosts: (userId: string) => Promise<IPost[] | undefined>
-  loadOlderPosts: (userId: string) => Promise<IPost[] | undefined>
+  createPost: ({ id, created_at, postContent, userId }: Post) => Promise<Post>
+  loadRecentPosts: (userId: string) => Promise<Post[] | undefined>
+  loadOlderPosts: (userId: string) => Promise<Post[] | undefined>
 }

@@ -1,4 +1,4 @@
-import { IPost } from '@/entities/protocols/IPost'
+import { Post } from '@/entities/Post'
 import { format } from 'date-fns'
 import _ from 'lodash'
 
@@ -7,8 +7,8 @@ export function dateFormater(date: Date) {
   return newDate
 }
 
-export function compareRecentDate(data?: IPost[]): IPost[] {
-  const sorted = _.orderBy(
+export function compareRecentDate(data: Post[]): Post[] {
+  const sorted: Post[] = _.orderBy(
     data,
     [element => new Date(element.created_at)],
     ['desc']
@@ -17,8 +17,8 @@ export function compareRecentDate(data?: IPost[]): IPost[] {
   return sorted
 }
 
-export function compareOlderDate(data?: IPost[]): IPost[] {
-  const sorted = _.orderBy(
+export function compareOlderDate(data: Post[]): Post[] {
+  const sorted: Post[] = _.orderBy(
     data,
     [element => new Date(element.created_at)],
     ['asc']
