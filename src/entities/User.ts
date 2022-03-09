@@ -1,6 +1,6 @@
 class User {
   id?: string
-  name: string
+  name?: string
   joinDate?: Date
   postCounter: any
 

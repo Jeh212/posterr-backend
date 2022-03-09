@@ -31,10 +31,12 @@ export class LoadUserRepositoryMock implements IUserRepository {
       }
     })
 
-    this.users.push({
+    const newUser = {
       ...user,
       postCounter: user?.postCounter + 1
-    })
+    }
+
+    this.users.push(newUser)
 
     this.users.shift()
 
