@@ -72,12 +72,10 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
-      id: '',
       name: 'John_test',
       postCounter: 0
     }
     const secondUserFake: User = {
-      id: '',
       name: 'new_dude',
       postCounter: 0
     }
@@ -97,7 +95,6 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
-      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -117,12 +114,10 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
-      id: '',
       name: 'John_test',
       postCounter: 0
     }
     const secondUserFake: User = {
-      id: '',
       name: 'new_dude',
       postCounter: 0
     }
@@ -141,7 +136,6 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const userFake: User = {
-      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -166,7 +160,6 @@ describe('UserAndFollowingTest', () => {
     const { followSut } = makeFollowSut()
 
     const MainuserFake: User = {
-      id: '',
       name: 'John_test',
       postCounter: 0
     }
@@ -174,7 +167,6 @@ describe('UserAndFollowingTest', () => {
 
     for (let i = 0; i < 5; i++) {
       const fakeUser: User = {
-        id: '',
         name: `Usuário: ${i}`,
         postCounter: 0
       }
@@ -202,7 +194,7 @@ describe('UserAndFollowingTest', () => {
     const calledMethod = jest.spyOn(sutUserService, 'updatePostCounter')
 
     for (let i = 0; i < 5; i++) {
-      await sutUserService.updatePostCounter(newUser.postCounter, newUser?.id)
+      await sutUserService.updatePostCounter(newUser.postCounter, newUser.id)
     }
 
     expect(calledMethod).toBeCalledTimes(5)

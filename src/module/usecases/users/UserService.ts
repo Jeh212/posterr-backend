@@ -4,7 +4,7 @@ import { IUserRepository } from '@/repositories/protocols/users/repositories/IUs
 export class UserService {
   constructor(private readonly userRespository: IUserRepository) {}
 
-  async loadUser(userId: string): Promise<User | undefined> {
+  async loadUser(userId?: string): Promise<User | undefined> {
     if (!userId) {
       new Error('User is Required')
     }
@@ -23,7 +23,7 @@ export class UserService {
     return user
   }
 
-  async updatePostCounter(postCounter: number, id: string): Promise<number> {
+  async updatePostCounter(postCounter: number, id?: string): Promise<number> {
     const user = await this.userRespository.load(id)
 
     const updated = this.userRespository.updatePostCounter(
