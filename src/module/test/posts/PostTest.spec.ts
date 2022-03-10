@@ -57,7 +57,7 @@ describe('PostTest', () => {
       id: '',
       postContent: 'My first post',
       userId,
-      created_at: ''
+      created_at: new Date()
     }
 
     const createPost = await sutPostServices.createPost(post)

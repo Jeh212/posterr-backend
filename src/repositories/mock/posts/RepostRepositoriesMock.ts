@@ -1,4 +1,4 @@
-import { Reposting } from '@/entities/Reposting'
+import { Reposting } from '@/entities/Repost'
 import { IRepostingRepositories } from '@/repositories/protocols/posts/repositories/IRepostingRepositories'
 import { v4 as uuid } from 'uuid'
 

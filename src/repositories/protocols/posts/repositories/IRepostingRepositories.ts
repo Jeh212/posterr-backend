@@ -1,4 +1,4 @@
-import { Reposting } from '@/entities/Reposting'
+import { Reposting } from '@/entities/Repost'
 
 interface IRepostingRepositories {
   createReposting: ({
