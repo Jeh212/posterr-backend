@@ -61,6 +61,7 @@ export class PostRepositoriesMock implements IPostRepositories {
       }
     ]
 
+
     const fiveRecentPost = recentPost.splice(0, 5)
 
     return fiveRecentPost

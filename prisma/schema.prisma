@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+
+  id          String   @id @default(uuid())
+  name        String
+  joinDate    DateTime @default(now())
+  postCounter Int
+
+  Posts      Posts[]
+  ReTweets   ReTweets[]
+  QuotePosts QuotePosts[]
+  @@map("users")
+}
+
+model Posts {
+
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  postContent String   @db.VarChar(777)
+
+  userId String
+  user   Users  @relation(fields: [userId], references: [id], map: "fk_User_Post")
+
+  ReTweets ReTweets[]
+
+  QuotePosts QuotePosts[]
+  @@map("posts")
+}
+
+model ReTweets {
+
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+
+  postId String
+  post   Posts  @relation(fields: [postId], references: [id], map: "fk_Post_ReTweets")
+
+  userId String
+  user   Users  @relation(fields: [userId], references: [id], map: "fk_User_ReTweets")
+
+  @@map("retweets")
+}
+
+model QuotePosts {
+
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  userComment String
+
+  postId String
+  post   Posts  @relation(fields: [postId], references: [id], map: "fk_Post_QuotePost")
+
+  userId String
+  user   Users  @relation(fields: [userId], references: [id], map: "fk_User_QuotePost")
+
+  @@map("quoteposts")
+}

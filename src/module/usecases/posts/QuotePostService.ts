@@ -12,6 +12,7 @@ class QuotePostService {
     _userId,
     created_at
   }: QuotePost): Promise<QuotePost> {
+    
     const quote = await this.quotePostRepositoriesMock.create({
       userComment,
       _postId,

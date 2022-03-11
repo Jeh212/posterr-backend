@@ -21,7 +21,10 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "strictPropertyInitialization":false
+    "strictPropertyInitialization":false,
+    "sourceMap": true,
+    "lib": ["esnext"],
+    
   },
   "include": [
     "src/**/*"
