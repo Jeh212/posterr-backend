@@ -5,7 +5,7 @@ export interface IFollowRepository {
     created_at
   }: Following) => Promise<Following>
 
-  getFollowing: (followingId: string) => Promise<Following | undefined>
+  getFollowing: (followingId: string) => Promise<Following | null>
   removeFollowing: (followingId: string) => Promise<string>
   listFollowing: (userId: string) => Promise<Following[] | undefined>
 }

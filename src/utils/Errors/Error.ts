@@ -4,3 +4,11 @@ export class NotFound extends Error {
     this.name = `NotFound: ${data}`
   }
 }
+
+
+export class InternalServerError extends Error {
+  constructor(data?: any) {
+    super()
+    this.name = `Server Error: ${data}`
+  }
+}

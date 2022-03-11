@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid'
 export class LoadUserRepositoryMock implements IUserRepository {
   private users: User[] = []
 
-  async load(userId?: string): Promise<User | undefined> {
+  async load(id: string): Promise<User | undefined> {
     const foundedUser = this.users.find(element => element.id === userId)
     return foundedUser
   }

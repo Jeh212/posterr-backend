@@ -15,11 +15,12 @@ model Users {
   id          String   @id @default(uuid())
   name        String
   joinDate    DateTime @default(now())
-  postCounter Int
+  postCounter Int      @default(0)
 
   Posts      Posts[]
   ReTweets   ReTweets[]
   QuotePosts QuotePosts[]
+  Following  Following[]
   @@map("users")
 }
 
@@ -65,4 +66,15 @@ model QuotePosts {
   user   Users  @relation(fields: [userId], references: [id], map: "fk_User_QuotePost")
 
   @@map("quoteposts")
+}
+
+model Following {
+
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  followingId String
+  userId      String
+  user        Users    @relation(fields: [userId], references: [id], map: "fk_User_Following")
+
+  @@map("following")
 }

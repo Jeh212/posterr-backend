@@ -1,8 +1,8 @@
 class Following {
   id?: string
-  created_at?: Date
-  followingId?: string
-  userId?: string
+  created_at: Date
+  followingId: string
+  userId: string
 
   private constructor({ created_at, followingId, userId }: Following) {
     return Object.assign(this, {
