@@ -4,7 +4,7 @@ import { IUserRepository } from "@/repositories/protocols/users/repositories";
 import { InternalServerError } from "@/utils/Errors";
 
 
-class PrismaUserRepository implements IUserRepository {
+class UserRepository implements IUserRepository {
     async createUser({ name, postCounter }: User): Promise<User> {
 
         try {
@@ -53,4 +53,4 @@ class PrismaUserRepository implements IUserRepository {
 
 }
 
-export { PrismaUserRepository }
+export { UserRepository }

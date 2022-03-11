@@ -1,7 +1,8 @@
 import { FollowRepositoryMock } from '@/repositories/mock/users/FollowRepositoryMock'
+import { IFollowRepository } from '@/repositories/protocols/users/repositories'
 
 export class FollowingService {
-  constructor(private readonly followRepositoryMock: FollowRepositoryMock) {}
+  constructor(private readonly followRepository: IFollowRepository) { }
 
   async createFollowing({
     userId,
@@ -11,7 +12,7 @@ export class FollowingService {
     if (userId === followingId) {
       throw new Error('Cannot follow yourself')
     }
-    const follow = await this.followRepositoryMock.createFollowing({
+    const follow = await this.followRepository.createFollowing({
       userId,
       followingId,
       created_at
@@ -21,11 +22,11 @@ export class FollowingService {
   }
 
   async unFollow(followingId?: string): Promise<string> {
-    const findFollowingUser = await this.followRepositoryMock.getFollowing(
+    const findFollowingUser = await this.followRepository.getFollowing(
       followingId
     )
     if (findFollowingUser) {
-      const unfollow = await this.followRepositoryMock.removeFollowing(
+      const unfollow = await this.followRepository.removeFollowing(
         followingId
       )
       return unfollow
@@ -35,7 +36,7 @@ export class FollowingService {
   }
 
   async listFollowing(userId?: string): Promise<Following[] | undefined> {
-    const list = this.followRepositoryMock.listFollowing(userId)
+    const list = this.followRepository.listFollowing(userId)
 
     return list
   }

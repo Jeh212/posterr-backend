@@ -1,13 +1,13 @@
 import { Reposting } from '@/entities/Repost'
-import { RepostRepositoriesMock } from '@/repositories/mock/posts/RepostRepositoriesMock'
+import { IRepostingRepositories } from '@/repositories/protocols/posts/repositories/IRepostingRepositories'
 
 class RepostService {
   constructor(
-    private readonly repostRepositoriesMock: RepostRepositoriesMock
-  ) {}
+    private readonly repostRepositories: IRepostingRepositories
+  ) { }
 
   async create({ userId, postId, created_at }: Reposting) {
-    const createdReposting = await this.repostRepositoriesMock.createReposting({
+    const createdReposting = await this.repostRepositories.createReposting({
       userId,
       postId,
       created_at

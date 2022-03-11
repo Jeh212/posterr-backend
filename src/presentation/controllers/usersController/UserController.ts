@@ -1,9 +1,10 @@
+import { UserService } from '@/module/usecases/users'
 import { Request, Response } from 'express'
 
 
-class CreateUserController {
+class UserController {
 
-
+    constructor(private userService: UserService) { }
     async handle({ body }: Request, { json }: Response) {
 
         const { name } = body
@@ -13,3 +14,4 @@ class CreateUserController {
     }
 
 }
+export { UserController }

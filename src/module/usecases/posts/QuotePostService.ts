@@ -1,9 +1,10 @@
 import { QuotePost } from '@/entities/QuotePost'
 import { QuotePostRepositoriesMock } from '@/repositories/mock/posts/QuotePostRepositoriesMock'
+import { IQuotePostRepositories } from '@/repositories/protocols/posts/repositories/IQuotePostRepositories'
 
 class QuotePostService {
   constructor(
-    private readonly quotePostRepositoriesMock: QuotePostRepositoriesMock
+    private readonly quotePostRepositories: IQuotePostRepositories
   ) { }
 
   async createQuote({
@@ -13,7 +14,7 @@ class QuotePostService {
     created_at
   }: QuotePost): Promise<QuotePost> {
 
-    const quote = await this.quotePostRepositoriesMock.create({
+    const quote = await this.quotePostRepositories.create({
       userComment,
       postId,
       userId,
