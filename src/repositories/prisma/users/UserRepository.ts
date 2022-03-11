@@ -52,3 +52,5 @@ class PrismaUserRepository implements IUserRepository {
     }
 
 }
+
+export { PrismaUserRepository }

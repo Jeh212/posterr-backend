@@ -4,8 +4,8 @@ interface IQuotePostRepositories {
   create: ({
     userComment,
     created_at,
-    _userId,
-    _postId
+    userId,
+    postId
   }: QuotePost) => Promise<QuotePost>
 }
 

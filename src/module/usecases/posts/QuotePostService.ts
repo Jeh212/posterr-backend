@@ -4,19 +4,19 @@ import { QuotePostRepositoriesMock } from '@/repositories/mock/posts/QuotePostRe
 class QuotePostService {
   constructor(
     private readonly quotePostRepositoriesMock: QuotePostRepositoriesMock
-  ) {}
+  ) { }
 
   async createQuote({
     userComment,
-    _postId,
-    _userId,
+    postId,
+    userId,
     created_at
   }: QuotePost): Promise<QuotePost> {
-    
+
     const quote = await this.quotePostRepositoriesMock.create({
       userComment,
-      _postId,
-      _userId,
+      postId,
+      userId,
       created_at
     })
 

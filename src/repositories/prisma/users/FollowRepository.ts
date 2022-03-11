@@ -46,12 +46,5 @@ class FollowRepository implements IFollowRepository {
         return await prismaClient.following.findMany({ take: 10 })
 
     }
-
-
-
-
-
-
-
-
 }
+export { FollowRepository }

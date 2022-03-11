@@ -3,9 +3,9 @@ class Post {
 
   created_at: Date | string
 
-  postContent?: string
+  postContent: string
 
-  userId?: string
+  userId: string
 
   private constructor({ created_at, postContent, userId }: Post) {
     return Object.assign(this, {
