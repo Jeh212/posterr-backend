@@ -1,4 +1,5 @@
-import { IFollowRepository } from '@/repositories/protocols/users/repositories'
+import { Following } from '@/entities/mockEntities/Following'
+import { IFollowRepository } from '@/repositories/mock/protocols/users/repositories'
 import { dateFormater } from '@/utils/dataFormater'
 import { v4 as uuid } from 'uuid'
 

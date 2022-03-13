@@ -1,12 +1,12 @@
-import { Post } from "@/entities/Post";
-import { prismaClient } from "@/infra/database/prismaClient";
-import { IPostRepositories } from "@/repositories/protocols/posts/repositories";
+import { IPostRepositories } from "@/repositories/prisma/protocols/posts/repositories/IPostRepositories";
+import { Posts } from "@prisma/client";
 import { InternalServerError } from "@/utils/Errors";
 
+import { prismaClient } from "@/infra/database/prismaClient";
 
 class PostRepositories implements IPostRepositories {
 
-    async createPost({ created_at, postContent, userId }: Post): Promise<Post> {
+    async createPost({ created_at, postContent, userId }: Posts): Promise<Posts> {
         try {
             const post = await prismaClient.posts.create({
                 data: {
@@ -20,7 +20,7 @@ class PostRepositories implements IPostRepositories {
             throw new InternalServerError(error)
         }
     }
-    async loadRecentPosts(userId: string): Promise<Post[] | null> {
+    async loadRecentPosts(userId: string): Promise<Posts[] | null> {
         try {
             const loadPost = await prismaClient.posts.findMany({
                 where: {
@@ -39,7 +39,7 @@ class PostRepositories implements IPostRepositories {
             throw new InternalServerError(error)
         }
     }
-    async loadOlderPosts(userId: string): Promise<Post[] | null> {
+    async loadOlderPosts(userId: string): Promise<Posts[] | null> {
         try {
             const loadPost = await prismaClient.posts.findMany({
                 where: {

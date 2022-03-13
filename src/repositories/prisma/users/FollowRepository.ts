@@ -1,6 +1,7 @@
 import { prismaClient } from "@/infra/database/prismaClient";
-import { IFollowRepository } from "@/repositories/protocols/users/repositories";
+import { IFollowRepository } from "@/repositories/prisma/protocols/users/repositories/IFollowRepository";
 import { InternalServerError } from "@/utils/Errors";
+import { Following } from "@prisma/client";
 
 
 class FollowRepository implements IFollowRepository {
@@ -41,7 +42,7 @@ class FollowRepository implements IFollowRepository {
         return removeFollowing.followingId
 
     }
-    async listFollowing(userId: string): Promise<Following[] | undefined> {
+    async listFollowing(userId: string): Promise<Following[] | null> {
 
         return await prismaClient.following.findMany({ take: 10 })
 

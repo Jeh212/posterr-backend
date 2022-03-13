@@ -1,4 +1,4 @@
-import { Post } from '@/entities/Post'
+import { Post } from '@/entities/mockEntities/Post'
 import { format } from 'date-fns'
 import _ from 'lodash'
 

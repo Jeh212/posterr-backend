@@ -1,11 +1,11 @@
-import { User } from "@/entities/User";
 import { prismaClient } from "@/infra/database/prismaClient";
-import { IUserRepository } from "@/repositories/protocols/users/repositories";
+import { IUserRepository } from "@/repositories/prisma/protocols/users/repositories/IUserRepository";
 import { InternalServerError } from "@/utils/Errors";
+import { Users } from "@prisma/client";
 
 
 class UserRepository implements IUserRepository {
-    async createUser({ name, postCounter }: User): Promise<User> {
+    async createUser({ name, postCounter }: Users): Promise<Users> {
 
         try {
             const user = await prismaClient.users.create({
@@ -21,7 +21,7 @@ class UserRepository implements IUserRepository {
 
         }
     }
-    async load(userid: string): Promise<User | null> {
+    async load(userid: string): Promise<Users | null> {
         try {
             const user = await prismaClient.users.findUnique({
                 where: {
@@ -36,7 +36,7 @@ class UserRepository implements IUserRepository {
 
 
     }
-    async updatePostCounter(postCounter: number, id?: string | undefined): Promise<number> {
+    async updatePostCounter(postCounter: number, id?: string): Promise<number> {
         try {
 
             const updateCount = await prismaClient.users.update({ data: { postCounter }, where: { id } })

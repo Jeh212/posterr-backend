@@ -1,11 +1,11 @@
-import { Reposting } from "@/entities/Repost";
 import { prismaClient } from "@/infra/database/prismaClient";
-import { IRepostingRepositories } from "@/repositories/protocols/posts/repositories/IRepostingRepositories";
+import { IRepostingRepositories } from "@/repositories/prisma/protocols/posts/repositories/IRepostingRepositories";
 import { InternalServerError } from "@/utils/Errors";
+import { ReTweets } from "@prisma/client";
 
 
 class RepostRepositories implements IRepostingRepositories {
-    async createReposting({ userId, created_at, postId }: Reposting): Promise<Reposting> {
+    async createReposting({ userId, created_at, postId }: ReTweets): Promise<ReTweets> {
 
         try {
             const repost = await prismaClient.reTweets.create({

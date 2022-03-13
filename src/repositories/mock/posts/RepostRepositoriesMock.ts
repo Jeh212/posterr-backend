@@ -1,5 +1,5 @@
-import { Reposting } from '@/entities/Repost'
-import { IRepostingRepositories } from '@/repositories/protocols/posts/repositories/IRepostingRepositories'
+import { Reposting } from '@/entities/mockEntities/Repost'
+import { IRepostingRepositories } from '@/repositories/mock/protocols/posts/repositories/IRepostingRepositories'
 import { v4 as uuid } from 'uuid'
 
 class RepostRepositoriesMock implements IRepostingRepositories {

@@ -1,4 +1,4 @@
-import { PostServices } from "@/module/usecases/users"
+import { PostServices } from "@/module/tests/usecases/users"
 import { PostController } from "@/presentation/controllers/postController/PostController"
 import { PostRepositories } from "@/repositories/prisma/posts"
 

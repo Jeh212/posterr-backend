@@ -1,4 +1,4 @@
-import { QuotePostService } from "@/module/usecases/posts/QuotePostService";
+import { QuotePostService } from "@/module/tests/usecases/posts/QuotePostService";
 import { QuotePostController } from "@/presentation/controllers/postController/QuotePostController";
 import { QuotePostRepositories } from "@/repositories/prisma/posts";
 

@@ -1,5 +1,5 @@
-import { Post } from '@/entities/Post'
-import { IPostRepositories } from '@/repositories/protocols/posts/repositories'
+import { Post } from '@/entities/mockEntities/Post'
+import { IPostRepositories } from '@/repositories/mock/protocols/posts/repositories'
 import { v4 as uuid } from 'uuid'
 
 export class PostRepositoriesMock implements IPostRepositories {

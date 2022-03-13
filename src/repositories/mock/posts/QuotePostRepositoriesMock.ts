@@ -1,5 +1,5 @@
-import { QuotePost } from '@/entities/QuotePost'
-import { IQuotePostRepositories } from '@/repositories/protocols/posts/repositories/IQuotePostRepositories'
+import { QuotePost } from '@/entities/mockEntities/QuotePost'
+import { IQuotePostRepositories } from '@/repositories/mock/protocols/posts/repositories/IQuotePostRepositories'
 import { v4 as uuid } from 'uuid'
 
 class QuotePostRepositoriesMock implements IQuotePostRepositories {

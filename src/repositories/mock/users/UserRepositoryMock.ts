@@ -1,12 +1,12 @@
-import { User } from '@/entities/User'
-import { IUserRepository } from '@/repositories/protocols/users/repositories/IUserRepository'
+import { User } from '@/entities/mockEntities/User'
+import { IUserRepository } from '@/repositories/mock/protocols/users/repositories/IUserRepository'
 import { dateFormater } from '@/utils/dataFormater'
 import { v4 as uuid } from 'uuid'
 
 export class LoadUserRepositoryMock implements IUserRepository {
   private users: User[] = []
 
-  async load(id: string): Promise<User | undefined> {
+  async load(userId: string): Promise<User | undefined> {
     const foundedUser = this.users.find(element => element.id === userId)
     return foundedUser
   }
@@ -33,7 +33,7 @@ export class LoadUserRepositoryMock implements IUserRepository {
 
     const newUser = {
       ...user,
-      postCounter: user?.postCounter + 1
+      postCounter: user?.postCounter + postCounter
     }
 
     this.users.push(newUser)
