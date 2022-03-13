@@ -21,7 +21,7 @@ class FollowingServiceMock {
     return follow
   }
 
-  async unFollow(followingId: string): Promise<string> {
+  async unFollow(followingId?: string): Promise<string> {
     const findFollowingUser = await this.followRepositoryMock.getFollowing(
       followingId
     )
@@ -35,7 +35,7 @@ class FollowingServiceMock {
     }
   }
 
-  async listFollowing(userId: string): Promise<Following[] | undefined> {
+  async listFollowing(userId?: string): Promise<Following[] | undefined> {
     const list = this.followRepositoryMock.listFollowing(userId)
 
     return list

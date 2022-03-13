@@ -1,28 +1,28 @@
 import { User } from '@/entities/mockEntities/User'
-import { FollowingService } from '@/module/tests/usecases/users'
-import { UserService } from '@/module/tests/usecases/users/UserService'
+import { FollowingServiceMock } from '@/module/tests/usecases/users'
+import { UserServiceMock } from '@/module/tests/usecases/users/UserServiceMock'
 import { FollowRepositoryMock } from '@/repositories/mock/users/FollowRepositoryMock'
-import { LoadUserRepositoryMock } from '@/repositories/mock/users/UserRepositoryMock'
+import { UserRepositoryMock } from '@/repositories/mock/users/UserRepositoryMock'
 
 type IMakeSut = {
-  sutUserService: UserService
-  userRepositoryMock: LoadUserRepositoryMock
+  sutUserService: UserServiceMock
+  userRepositoryMock: UserRepositoryMock
 }
 type IFollowSut = {
   followRepositoryMock: FollowRepositoryMock
-  followSut: FollowingService
+  followSut: FollowingServiceMock
 }
 describe('UserAndFollowingTest', () => {
   const makeSut = (): IMakeSut => {
-    const userRepositoryMock = new LoadUserRepositoryMock()
-    const sutUserService = new UserService(userRepositoryMock)
+    const userRepositoryMock = new UserRepositoryMock()
+    const sutUserService = new UserServiceMock(userRepositoryMock)
 
     return { userRepositoryMock, sutUserService }
   }
 
   const makeFollowSut = (): IFollowSut => {
     const followRepositoryMock = new FollowRepositoryMock()
-    const followSut = new FollowingService(followRepositoryMock)
+    const followSut = new FollowingServiceMock(followRepositoryMock)
     return { followRepositoryMock, followSut }
   }
 

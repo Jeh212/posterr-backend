@@ -25,7 +25,7 @@ export class UserServiceMock {
     return loadUser
   }
 
-  async updatePostCounter(postCounter: number, id: string): Promise<number> {
+  async updatePostCounter(postCounter: number, id?: string): Promise<number> {
     const user = await this.userRespositoryMock.load(id)
 
     const updated = this.userRespositoryMock.updatePostCounter(
