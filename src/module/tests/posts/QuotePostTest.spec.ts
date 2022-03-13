@@ -1,12 +1,12 @@
 import { Post } from '@/entities/mockEntities/Post'
 import { QuotePost } from '@/entities/mockEntities/QuotePost'
-import { QuotePostService } from '@/module/tests/usecases/posts/QuotePostService'
 import { QuotePostRepositoriesMock } from '@/repositories/mock/posts/QuotePostRepositoriesMock'
+import { QuotePostServiceMock } from '../usecases/posts'
 
 describe('QuotePostTest', () => {
   it('Should be able to repost another user post and put a quote', async () => {
     const quoteMockRepo = new QuotePostRepositoriesMock()
-    const quotePostSut = new QuotePostService(quoteMockRepo)
+    const quotePostSut = new QuotePostServiceMock(quoteMockRepo)
 
     const userPost: Post = {
       id: '147',
@@ -26,7 +26,7 @@ describe('QuotePostTest', () => {
 
 
     expect(createQuote.id).toBe(createQuote.id)
-    expect(createQuote._userId).toBe(userPost.userId)
-    expect(createQuote._postId).toBe(userPost.id)
+    expect(createQuote.userId).toBe(userPost.userId)
+    expect(createQuote.postId).toBe(userPost.id)
   })
 })

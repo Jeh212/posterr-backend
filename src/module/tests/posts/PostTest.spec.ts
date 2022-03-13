@@ -1,24 +1,24 @@
 import { Post } from '@/entities/mockEntities/Post'
 import { User } from '@/entities/mockEntities/User'
 
-import { PostServices, UserService } from '@/module/tests/usecases/users'
+import { PostServicesMock, UserServiceMock } from '@/module/tests/usecases/users'
 import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
 import { LoadUserRepositoryMock } from '@/repositories/mock/users'
 
 describe('PostTest', () => {
   type PostSut = {
     postRepoMock: PostRepositoriesMock
-    sutPostServices: PostServices
+    sutPostServices: PostServicesMock
   }
 
   type IMakeSut = {
-    sutUserService: UserService
+    sutUserService: UserServiceMock
     userRepositoryMock: LoadUserRepositoryMock
   }
 
   const makeSut = (): IMakeSut => {
     const userRepositoryMock = new LoadUserRepositoryMock()
-    const sutUserService = new UserService(userRepositoryMock)
+    const sutUserService = new UserServiceMock(userRepositoryMock)
 
     return { userRepositoryMock, sutUserService }
   }
@@ -26,7 +26,7 @@ describe('PostTest', () => {
   const postSut = (): PostSut => {
     const postRepoMock = new PostRepositoriesMock()
 
-    const sutPostServices = new PostServices(postRepoMock)
+    const sutPostServices = new PostServicesMock(postRepoMock)
 
     return {
       postRepoMock,

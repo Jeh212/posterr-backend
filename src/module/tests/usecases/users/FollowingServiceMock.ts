@@ -1,8 +1,8 @@
-import { IFollowRepository } from '@/repositories/mock/protocols/users/repositories'
 import { Following } from '@/entities/mockEntities/Following'
+import { FollowRepositoryMock } from '@/repositories/mock/users'
 
 class FollowingServiceMock {
-  constructor(private readonly followRepositoryMock: IFollowRepository) { }
+  constructor(private readonly followRepositoryMock: FollowRepositoryMock) { }
 
   async createFollowing({
     userId,

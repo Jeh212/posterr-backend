@@ -1,8 +1,9 @@
 import { User } from '@/entities/mockEntities/User'
-import { IUserRepository } from '@/repositories/mock/protocols/users/repositories/IUserRepository'
+import { UserRepositoryMock } from '@/repositories/mock/users/UserRepositoryMock'
 
 export class UserServiceMock {
-  constructor(private readonly userRespositoryMock: IUserRepository) { }
+
+  constructor(private readonly userRespositoryMock: UserRepositoryMock) { }
 
   async createUser({ name, postCounter }: User): Promise<User> {
     const userCreate = User.create({ name, postCounter })

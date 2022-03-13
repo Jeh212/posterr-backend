@@ -1,9 +1,9 @@
 import { Reposting } from '@/entities/mockEntities/Repost'
-import { IRepostingRepositories } from '@/repositories/mock/protocols/posts/repositories/IRepostingRepositories'
+import { RepostRepositoriesMock } from '@/repositories/mock/posts/RepostRepositoriesMock'
 
 class RepostServiceMock {
   constructor(
-    private readonly repostRepositoriesMock: IRepostingRepositories
+    private readonly repostRepositoriesMock: RepostRepositoriesMock
   ) { }
 
   async create({ userId, postId, created_at }: Reposting) {

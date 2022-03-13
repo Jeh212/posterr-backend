@@ -1,9 +1,9 @@
 import { Post } from '@/entities/mockEntities/Post'
-import { IPostRepositories } from '@/repositories/mock/protocols/posts/repositories'
+import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
 import { compareOlderDate, compareRecentDate } from '@/utils/dataFormater'
 
 class PostServicesMock {
-  constructor(private readonly postRepositoriesMock: IPostRepositories) { }
+  constructor(private readonly postRepositoriesMock: PostRepositoriesMock) { }
 
   async createPost(post: Post): Promise<Post> {
     const createPost = await this.postRepositoriesMock.createPost(post)

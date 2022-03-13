@@ -1,9 +1,9 @@
 import { QuotePost } from '@/entities/mockEntities/QuotePost'
-import { IQuotePostRepositories } from '@/repositories/mock/protocols/posts/repositories/IQuotePostRepositories'
+import { QuotePostRepositoriesMock } from '@/repositories/mock/posts/QuotePostRepositoriesMock'
 
 class QuotePostServiceMock {
   constructor(
-    private readonly quotePostRepositoriesMock: IQuotePostRepositories
+    private readonly quotePostRepositoriesMock: QuotePostRepositoriesMock
   ) { }
 
   async createQuote({

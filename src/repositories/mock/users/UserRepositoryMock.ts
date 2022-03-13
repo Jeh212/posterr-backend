@@ -3,10 +3,10 @@ import { IUserRepository } from '@/repositories/mock/protocols/users/repositorie
 import { dateFormater } from '@/utils/dataFormater'
 import { v4 as uuid } from 'uuid'
 
-export class LoadUserRepositoryMock implements IUserRepository {
+export class UserRepositoryMock implements IUserRepository {
   private users: User[] = []
 
-  async load(userId: string): Promise<User | undefined> {
+  async load(userId?: string): Promise<User | undefined> {
     const foundedUser = this.users.find(element => element.id === userId)
     return foundedUser
   }
