@@ -1,4 +1,4 @@
-import { Post } from '@/entities/mockEntities/Post'
+import { Posts } from '@prisma/client'
 import { format } from 'date-fns'
 import _ from 'lodash'
 
@@ -7,20 +7,20 @@ export function dateFormater(date: Date) {
   return newDate
 }
 
-export function compareRecentDate(data?: Post[]): Post[] {
-  const sorted: Post[] = _.orderBy(
+export function compareRecentDate(data: Posts[] | null): Posts[] {
+  const sorted: Posts[] = _.orderBy(
     data,
-    [element => new Date(element.created_at)],
+    [element => element.created_at],
     ['desc']
   )
 
   return sorted
 }
 
-export function compareOlderDate(data?: Post[]): Post[] {
-  const sorted: Post[] = _.orderBy(
+export function compareOlderDate(data: Posts[] | null): Posts[] {
+  const sorted: Posts[] = _.orderBy(
     data,
-    [element => new Date(element.created_at)],
+    [element => element.created_at],
     ['asc']
   )
 

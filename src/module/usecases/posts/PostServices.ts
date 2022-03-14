@@ -3,32 +3,45 @@ import { compareOlderDate, compareRecentDate } from '@/utils/dataFormater'
 import { Posts } from '@prisma/client'
 
 class PostServices {
+
   constructor(private readonly postRepositories: PostRepositories) { }
 
-  // async createPost(post: Post): Promise<Posts> {
-  //   const createPost = await this.postRepositories.createPost(post)
+  async createPost({ postContent, userId }: Omit<Posts, 'id'>): Promise<Posts> {
 
-  //   return createPost
-  // }
-  // async loadRecentPosts(userId: string): Promise<Post[] | undefined> {
-  //   if (!userId) {
-  //     throw new Error('User id required')
-  //   }
-  //   const loadPost = await this.postRepositories.loadRecentPosts(userId)
+    const createPost = await this.postRepositories.createPost({ postContent, userId })
 
-  //   const sortedPost = compareRecentDate(loadPost)
+    return createPost
+  }
 
-  //   return sortedPost
-  // }
-  // async loadOlderPosts(userId: string): Promise<Post[] | undefined> {
-  //   if (!userId) {
-  //     throw new Error('User id required')
-  //   }
-  //   const loadPost = await this.postRepositories.loadOlderPosts(userId)
+  async loadRecentPosts(userId: string): Promise<Posts[] | null> {
 
-  //   const sortedPost = compareOlderDate(loadPost)
+    if (!userId) {
+      throw new Error('User id required')
+    }
+    const loadPost = await this.postRepositories.loadRecentPosts(userId)
 
-  //   return sortedPost
-  // }
+    if (!loadPost) {
+      throw new Error('Post not found')
+    }
+
+    const sortedPost = compareRecentDate(loadPost)
+
+    return sortedPost
+  }
+
+  async loadOlderPosts(userId: string): Promise<Posts[] | null> {
+    if (!userId) {
+      throw new Error('User id required')
+    }
+    const loadPost = await this.postRepositories.loadOlderPosts(userId)
+
+    if (!loadPost) {
+      throw new Error('User not found')
+    }
+
+    const sortedPost = compareOlderDate(loadPost)
+
+    return sortedPost
+  }
 }
 export { PostServices }

@@ -1,6 +1,6 @@
+import { UserService } from "@/module/usecases/users/UserService";
 import { UserController } from "@/presentation/controllers/usersController/UserController";
 import { UserRepository } from "@/repositories/prisma/users"
-import { UserService } from "../../tests/usecases/users";
 
 
 

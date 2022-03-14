@@ -1,4 +1,4 @@
-import { FollowingService } from "@/module/tests/usecases/users";
+import { FollowingService } from "@/module/usecases/users/FollowingService";
 import { Request, Response } from "express";
 
 
@@ -8,28 +8,28 @@ class FollowingController {
 
     constructor(private followingService: FollowingService) { }
 
-    async handleCreateFollowing({ body }: Request, { json }: Response) {
-        const { userId, created_at, followingId } = body
+    // async handleCreateFollowing({ body }: Request, { json }: Response) {
+    //     const { userId, created_at, followingId } = body
 
-        const following = await this.followingService.createFollowing({ userId, created_at, followingId })
+    //     const following = await this.followingService.createFollowing({ userId, created_at, followingId })
 
-        return json(following)
-    }
+    //     return json(following)
+    // }
 
-    async handleUnfollow({ body }: Request, { json }: Response) {
-        const { followingId } = body;
+    // async handleUnfollow({ body }: Request, { json }: Response) {
+    //     const { followingId } = body;
 
-        const unfollow = await this.followingService.unFollow(followingId);
+    //     const unfollow = await this.followingService.unFollow(followingId);
 
-        return json(unfollow);
-    }
+    //     return json(unfollow);
+    // }
 
-    async handleListFollowing({ body }: Request, { json }: Response) {
-        const { userId } = body
-        const listFollowing = await this.followingService.listFollowing(userId);
+    // async handleListFollowing({ body }: Request, { json }: Response) {
+    //     const { userId } = body
+    //     const listFollowing = await this.followingService.listFollowing(userId);
 
-        return json(listFollowing)
-    }
+    //     return json(listFollowing)
+    // }
 
 }
 

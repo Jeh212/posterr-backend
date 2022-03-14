@@ -1,6 +1,6 @@
+import { FollowingService } from "@/module/usecases/users/FollowingService"
 import { FollowingController } from "@/presentation/controllers/usersController/FollowingController"
 import { FollowRepository } from "@/repositories/prisma/users"
-import { FollowingService } from "../usecases/users"
 
 
 

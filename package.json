@@ -7,7 +7,7 @@
   "author": "jeancarlos.souzasilva@gmail.com",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules  src/server.ts",
+    "dev": "ts-node-dev --exit-child src/server.ts",
     "test": "jest --no-cache --coverage --watchAll"
   },
   "devDependencies": {
@@ -27,7 +27,6 @@
     "prettier": "2.5.1",
     "prisma": "^3.10.0",
     "ts-jest": "^27.1.3",
-    "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.2"
   },

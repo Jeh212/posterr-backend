@@ -1,4 +1,4 @@
-import { RepostService } from "@/module/tests/usecases/posts/RepostService";
+import { RepostService } from "@/module/usecases/posts/RepostService";
 import { RepostController } from "@/presentation/controllers/postController/RepostController";
 import { RepostRepositories } from "@/repositories/prisma/posts"
 

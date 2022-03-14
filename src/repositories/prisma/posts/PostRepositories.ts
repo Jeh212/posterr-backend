@@ -6,11 +6,10 @@ import { prismaClient } from "@/infra/database/prismaClient";
 
 class PostRepositories implements IPostRepositories {
 
-    async createPost({ created_at, postContent, userId }: Posts): Promise<Posts> {
+    async createPost({ postContent, userId }: Omit<Posts, 'id'>): Promise<Posts> {
         try {
             const post = await prismaClient.posts.create({
                 data: {
-                    created_at,
                     postContent,
                     userId
                 }

@@ -1,4 +1,4 @@
-import { UserService } from '@/module/tests/usecases/users'
+import { UserService } from '@/module/usecases/users/UserService'
 import { Request, Response } from 'express'
 
 
@@ -6,32 +6,32 @@ class UserController {
 
     constructor(private userService: UserService) { }
 
-    async handleCreate({ body }: Request, { json }: Response) {
+    // async handleCreate({ body }: Request, { json }: Response) {
 
-        const { name, postCounter } = body
+    //     const { name, postCounter } = body
 
-        const user = await this.userService.createUser({ name, postCounter })
+    //     const user = await this.userService.createUser({ name, postCounter })
 
-        return json(user)
-    }
+    //     return json(user)
+    // }
 
-    async handleLoadUser({ body }: Request, { json }: Response) {
+    // async handleLoadUser({ body }: Request, { json }: Response) {
 
-        const { userId } = body
+    //     const { userId } = body
 
-        const user = await this.userService.loadUser(userId);
+    //     const user = await this.userService.loadUser(userId);
 
-        return json(user);
+    //     return json(user);
 
-    }
+    // }
 
 
-    async handleUpdatePostCounter({ body }: Request, { json }: Response) {
-        const { postCounter, id: userId } = body;
+    // async handleUpdatePostCounter({ body }: Request, { json }: Response) {
+    //     const { postCounter, id: userId } = body;
 
-        const count = await this.userService.updatePostCounter(postCounter, userId);
-        return count;
-    }
+    //     const count = await this.userService.updatePostCounter(postCounter, userId);
+    //     return count;
+    // }
 
 
 }

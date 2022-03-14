@@ -9,11 +9,13 @@
       "."
     ],
     "paths": {
-      "@/*":["*"]
+      "@/*": [
+        "*"
+      ]
     },
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -21,10 +23,11 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "strictPropertyInitialization":false,
+    "strictPropertyInitialization": false,
     "sourceMap": true,
-    "lib": ["esnext"],
-    
+    "lib": [
+      "esnext"
+    ],
   },
   "include": [
     "src/**/*"
