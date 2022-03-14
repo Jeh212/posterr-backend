@@ -1,14 +1,15 @@
 import { Post } from '@/entities/mockEntities/Post'
 import { User } from '@/entities/mockEntities/User'
 
-import { PostServicesMock, UserServiceMock } from '@/module/tests/usecases/users'
+import { UserServiceMock } from '@/module/tests/usecases/users'
 import { PostRepositoriesMock } from '@/repositories/mock/posts/PostRepositoriesMock'
 import { UserRepositoryMock } from '@/repositories/mock/users'
+import { PostServicesMock } from '../usecases/posts/PostServicesMock'
 
 describe('PostTest', () => {
   type PostSut = {
     postRepoMock: PostRepositoriesMock
-    sutPostServices: PostServicesMock
+    sutPostServicesMock: PostServicesMock
   }
 
   type IMakeSut = {
@@ -26,11 +27,11 @@ describe('PostTest', () => {
   const postSut = (): PostSut => {
     const postRepoMock = new PostRepositoriesMock()
 
-    const sutPostServices = new PostServicesMock(postRepoMock)
+    const sutPostServicesMock = new PostServicesMock(postRepoMock)
 
     return {
       postRepoMock,
-      sutPostServices
+      sutPostServicesMock
     }
   }
   beforeAll(async () => {
@@ -51,7 +52,7 @@ describe('PostTest', () => {
   }
 
   it('Should be able to create a post', async () => {
-    const { sutPostServices } = postSut()
+    const { sutPostServicesMock } = postSut()
 
     const { id: userId } = await defaultUser()
 
@@ -62,13 +63,13 @@ describe('PostTest', () => {
       created_at: new Date()
     }
 
-    const createPost = await sutPostServices.createPost(post)
+    const createPost = await sutPostServicesMock.createPost(post)
 
     expect(createPost.id).toBe(createPost.id)
   })
 
   it('Should be able to load 5 recents post', async () => {
-    const { sutPostServices } = postSut()
+    const { sutPostServicesMock } = postSut()
 
     const mockUser = {
       id: 'b056d610-6bfe-4956-b88d-83609fcef908',
@@ -77,13 +78,13 @@ describe('PostTest', () => {
       postCounter: 0
     }
 
-    const loadPost = await sutPostServices.loadRecentPosts(mockUser.id)
+    const loadPost = await sutPostServicesMock.loadRecentPosts(mockUser.id)
 
     expect(loadPost?.length).toEqual(5)
   })
 
   it('Should be able to load 5 older post', async () => {
-    const { sutPostServices } = postSut()
+    const { sutPostServicesMock } = postSut()
 
     const mockUser = {
       id: 'b056d610-6bfe-4956-b88d-83609fcef908',
@@ -92,7 +93,7 @@ describe('PostTest', () => {
       postCounter: 0
     }
 
-    const loadPost = await sutPostServices.loadRecentPosts(mockUser.id)
+    const loadPost = await sutPostServicesMock.loadRecentPosts(mockUser.id)
 
     expect(loadPost?.length).toEqual(5)
   })
