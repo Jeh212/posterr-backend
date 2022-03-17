@@ -1,14 +1,15 @@
 import { PostRepositories } from '@/repositories/prisma/posts'
-import { compareOlderDate, compareRecentDate } from '@/utils/dataFormater'
+import { compareOlderDate, compareRecentDate, dateFormater } from '../../../utils/dataFormater'
 import { Posts } from '@prisma/client'
 
 class PostServices {
 
   constructor(private readonly postRepositories: PostRepositories) { }
 
-  async createPost({ postContent, userId }: Omit<Posts, 'id'>): Promise<Posts> {
+  async createPost({ userId, postContent, created_at }: Omit<Posts, 'id'>): Promise<Posts> {
 
-    const createPost = await this.postRepositories.createPost({ postContent, userId })
+
+    const createPost = await this.postRepositories.createPost({ userId, postContent, created_at })
 
     return createPost
   }
@@ -20,10 +21,6 @@ class PostServices {
     }
     const loadPost = await this.postRepositories.loadRecentPosts(userId)
 
-    if (!loadPost) {
-      throw new Error('Post not found')
-    }
-
     const sortedPost = compareRecentDate(loadPost)
 
     return sortedPost
@@ -34,10 +31,6 @@ class PostServices {
       throw new Error('User id required')
     }
     const loadPost = await this.postRepositories.loadOlderPosts(userId)
-
-    if (!loadPost) {
-      throw new Error('User not found')
-    }
 
     const sortedPost = compareOlderDate(loadPost)
 

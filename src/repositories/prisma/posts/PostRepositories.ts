@@ -6,24 +6,26 @@ import { prismaClient } from "@/infra/database/prismaClient";
 
 class PostRepositories implements IPostRepositories {
 
-    async createPost({ postContent, userId }: Omit<Posts, 'id'>): Promise<Posts> {
+    async createPost({ userId, postContent, created_at }: Omit<Posts, 'id'>): Promise<Posts> {
         try {
             const post = await prismaClient.posts.create({
                 data: {
+                    userId,
                     postContent,
-                    userId
+                    created_at: new Date()
                 }
             })
+
             return post
         } catch (error) {
-            throw new InternalServerError(error)
+            throw new Error()
         }
     }
     async loadRecentPosts(userId: string): Promise<Posts[] | null> {
         try {
             const loadPost = await prismaClient.posts.findMany({
                 where: {
-                    id: userId,
+                    userId,
                     AND: [
                         {
                             created_at: {
@@ -39,10 +41,11 @@ class PostRepositories implements IPostRepositories {
         }
     }
     async loadOlderPosts(userId: string): Promise<Posts[] | null> {
+
         try {
             const loadPost = await prismaClient.posts.findMany({
                 where: {
-                    id: userId,
+                    userId,
                     AND: [
                         {
                             created_at: {

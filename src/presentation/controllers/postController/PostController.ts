@@ -1,46 +1,58 @@
 import { PostServices } from "@/module/usecases/posts/PostServices";
+import { dateFormaterPosts } from "@/utils/dataFormater";
 import { Posts } from "@prisma/client";
 import { Request, Response } from "express";
 
 
-type RequestPosts = Pick<Posts, "postContent" | "userId">
+type RequestPosts = Pick<Posts, "postContent" | "userId" | "created_at">
 type RequestLoadRecentPost = Pick<Posts, "userId">
 
 
-class PostController {
+export class PostController {
 
     constructor(private postServices: PostServices) { }
 
-    async handleCreate({ body }: Request, { json }: Response) {
-
-        const { postContent, userId }: RequestPosts = body;
-
-        const createUser = await this.postServices.createPost({ postContent, userId });
+    async handleCreate(request: Request, response: Response) {
 
 
-        return json(createUser)
+        const { postContent, userId, created_at }: RequestPosts = request.body;
+
+        const createUser = await this.postServices.createPost({ postContent, userId, created_at });
+
+
+        return response.status(201).json(createUser)
     }
 
-    async handleLoadRecentPosts({ body }: Request, { json }: Response) {
+    async handleLoadRecentPosts(request: Request, response: Response) {
 
-        const { userId }: RequestLoadRecentPost = body;
+        const { userId }: RequestLoadRecentPost = request.body;
 
-        const loadUser = await this.postServices.loadRecentPosts(userId);
+        const loadUserRecentPosts = await this.postServices.loadRecentPosts(userId);
 
-        return json(loadUser)
+        if (!loadUserRecentPosts) {
+            throw new Error('There isnt recents posts')
+        }
+
+        const formatedData = dateFormaterPosts(loadUserRecentPosts)
+
+        return response.status(200).json(formatedData)
 
     }
 
-    async handleOlderPosts({ body }: Request, { json }: Response) {
+    async handleOlderPosts(request: Request, response: Response) {
 
-        const { userId } = body;
+        const { userId } = request.body;
 
         const olderPost = await this.postServices.loadOlderPosts(userId);
 
-        return json(olderPost)
+        if (!olderPost) {
+            throw new Error('Posts not found')
+        }
+
+        const formatedData = dateFormaterPosts(olderPost)
+
+        return response.json(formatedData)
 
     }
 
 }
-
-export { PostController }

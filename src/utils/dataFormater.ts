@@ -26,3 +26,20 @@ export function compareOlderDate(data: Posts[] | null): Posts[] {
 
   return sorted
 }
+
+export function dateFormaterPosts(data: Posts[]): Promise<Posts[]> {
+
+  let result: any = []
+
+  data.forEach((element: Posts) => {
+
+    let post: any = {};
+    post.id = element.id,
+      post.created_at = dateFormater(element.created_at),
+      post.postContent = element.postContent,
+      post.userId = element.userId,
+
+      result.push(post);
+  })
+  return result;
+}

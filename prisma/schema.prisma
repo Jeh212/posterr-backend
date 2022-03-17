@@ -1,13 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model Users {
@@ -31,7 +31,7 @@ model Posts {
   postContent String   @db.VarChar(777)
 
   userId String
-  user   Users  @relation(fields: [userId], references: [id], map: "fk_User_Post")
+  user   Users  @relation(fields: [userId], references: [id])
 
   ReTweets ReTweets[]
 
