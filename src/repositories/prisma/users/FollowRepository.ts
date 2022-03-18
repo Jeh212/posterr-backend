@@ -1,13 +1,13 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IFollowRepository } from "@/repositories/prisma/protocols/users/repositories/IFollowRepository";
 import { InternalServerError } from "@/utils/Errors";
-import { Following } from "@prisma/client";
+import { Following, Users } from "@prisma/client";
 
 
 class FollowRepository implements IFollowRepository {
 
 
-    async createFollowing({ userId, followingId, created_at }: Following): Promise<Following> {
+    async createFollowing({ userId, followingId, created_at }: Omit<Following, 'id'>): Promise<Following> {
 
         try {
             const following = await prismaClient.following.create({
@@ -28,24 +28,45 @@ class FollowRepository implements IFollowRepository {
 
     async getFollowing(followingId: string): Promise<Following | null> {
 
-        const following = await prismaClient.following.findUnique({
+
+        const following = await prismaClient.following.findFirst({
             where: {
-                id: followingId
+                followingId
             }
         })
+
         return following
-    }
+    };
+
     async removeFollowing(followingId: string): Promise<string> {
 
-        const removeFollowing = await prismaClient.following.delete({ where: { id: followingId } })
-
-        return removeFollowing.followingId
+        try {
+            const removeFollowing = await prismaClient.following.delete({
+                where: {
+                    id: followingId
+                }
+            })
+            return removeFollowing.followingId
+        } catch (error) {
+            console.log(error);
+            throw new Error()
+        }
 
     }
-    async listFollowing(userId: string): Promise<Following[] | null> {
+    async listFollowing(userId: string): Promise<Following[] | []> {
 
-        return await prismaClient.following.findMany({ take: 10 })
+        return await prismaClient.following.findMany({ take: 10, where: { userId } });
+    }
 
+    async includesFollowing(followingId: string, userId: string): Promise<Following | null> {
+
+        const getFollowing = await prismaClient.following.findFirst({
+            where: {
+                userId,
+                AND: [{ followingId }]
+            }
+        })
+        return getFollowing;
     }
 }
 export { FollowRepository }

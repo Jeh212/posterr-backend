@@ -5,13 +5,14 @@ import { Users } from "@prisma/client";
 
 
 class UserRepository implements IUserRepository {
-    async createUser({ name, postCounter }: Users): Promise<Users> {
+    async createUser({ name, postCounter, joinDate }: Omit<Users, 'id'>): Promise<Users> {
 
         try {
             const user = await prismaClient.users.create({
                 data: {
                     name,
-                    postCounter
+                    postCounter,
+                    joinDate
                 }
             })
 
@@ -21,11 +22,11 @@ class UserRepository implements IUserRepository {
 
         }
     }
-    async load(userid: string): Promise<Users | null> {
+    async load(userId: string): Promise<Users | null> {
         try {
             const user = await prismaClient.users.findUnique({
                 where: {
-                    id: userid
+                    id: userId
                 }
             })
             return user
@@ -36,8 +37,9 @@ class UserRepository implements IUserRepository {
 
 
     }
-    async updatePostCounter(postCounter: number, id?: string): Promise<number> {
+    async updatePostCounter(postCounter: number, id: string): Promise<number> {
         try {
+            console.log('postCounter', postCounter);
 
             const updateCount = await prismaClient.users.update({ data: { postCounter }, where: { id } })
 

@@ -15,9 +15,9 @@ export class PostController {
     async handleCreate(request: Request, response: Response) {
 
 
-        const { postContent, userId, created_at }: RequestPosts = request.body;
+        const { postContent, userId }: RequestPosts = request.body;
 
-        const createUser = await this.postServices.createPost({ postContent, userId, created_at });
+        const createUser = await this.postServices.createPost({ postContent, userId, created_at: new Date() });
 
 
         return response.status(201).json(createUser)

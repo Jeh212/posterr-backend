@@ -9,5 +9,6 @@ export interface IFollowRepository {
 
     getFollowing: (followingId: string) => Promise<Following | null>
     removeFollowing: (followingId: string) => Promise<string>
-    listFollowing: (userId: string) => Promise<Following[] | null>
+    listFollowing: (userId: string) => Promise<Following[] | []>
+    includesFollowing: (followingId: string, userId: string) => Promise<Following | null>;
 }

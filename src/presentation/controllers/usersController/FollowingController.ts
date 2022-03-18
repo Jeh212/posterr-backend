@@ -8,28 +8,29 @@ class FollowingController {
 
     constructor(private followingService: FollowingService) { }
 
-    // async handleCreateFollowing({ body }: Request, { json }: Response) {
-    //     const { userId, created_at, followingId } = body
+    async handleCreateFollowing(request: Request, response: Response) {
+        const { userId, created_at, followingId } = request.body
 
-    //     const following = await this.followingService.createFollowing({ userId, created_at, followingId })
+        const following = await this.followingService.createFollowing({ userId, created_at, followingId })
 
-    //     return json(following)
-    // }
+        return response.json(following)
+    }
 
-    // async handleUnfollow({ body }: Request, { json }: Response) {
-    //     const { followingId } = body;
+    async handleUnfollow(request: Request, response: Response) {
+        const { followingId } = request.params;
 
-    //     const unfollow = await this.followingService.unFollow(followingId);
 
-    //     return json(unfollow);
-    // }
+        const unfollow = await this.followingService.unFollow(followingId);
 
-    // async handleListFollowing({ body }: Request, { json }: Response) {
-    //     const { userId } = body
-    //     const listFollowing = await this.followingService.listFollowing(userId);
+        return response.status(200).json(unfollow);
+    }
 
-    //     return json(listFollowing)
-    // }
+    async handleListFollowing(request: Request, response: Response) {
+        const { userId } = request.params
+        const listFollowing = await this.followingService.listFollowing(userId);
+
+        return response.status(200).json(listFollowing)
+    }
 
 }
 

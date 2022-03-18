@@ -5,35 +5,33 @@ class UserService {
 
   constructor(private readonly userRespository: UserRepository) { }
 
-  // async createUser({ name, postCounter }: Users): Promise<Users> {
-  //   const userCreate = User.create({ name, postCounter })
+  async createUser({ name, postCounter, joinDate }: Omit<Users, 'id'>): Promise<Users> {
 
-  //   const user = await this.userRespository.createUser(userCreate)
-  //   return user
-  // }
+    const user = await this.userRespository.createUser({ name, postCounter, joinDate })
+    return user
+  }
 
-  // async loadUser(userId?: string): Promise<User | undefined> {
-  //   if (!userId) {
-  //     new Error('User is Required')
-  //   }
-  //   const loadUser = await this.userRespository.load(userId)
+  async loadUser(userId: string): Promise<Users | undefined> {
+    if (!userId) {
+      new Error('User is Required')
+    }
+    const loadUser = await this.userRespository.load(userId);
 
-  //   if (!loadUser) {
-  //     throw new Error('not found')
-  //   }
+    if (!loadUser) {
+      throw new Error('not found')
+    }
 
-  //   return loadUser
-  // }
+    return loadUser
+  }
 
-  // async updatePostCounter(postCounter: number, id?: string): Promise<number> {
-  //   const user = await this.userRespository.load(id)
+  async updatePostCounter(postCounter: number, id: string): Promise<number> {
 
-  //   const updated = this.userRespository.updatePostCounter(
-  //     postCounter,
-  //     id
-  //   )
+    const updated = this.userRespository.updatePostCounter(
+      postCounter,
+      id
+    )
 
-  //   return updated
-  // }
+    return updated
+  }
 }
 export { UserService }

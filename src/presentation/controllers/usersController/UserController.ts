@@ -1,29 +1,33 @@
 import { UserService } from '@/module/usecases/users/UserService'
+import { Users } from '@prisma/client'
 import { Request, Response } from 'express'
+
+
+type RequestCreateUser = Pick<Users, "postCounter" | "name">
 
 
 class UserController {
 
     constructor(private userService: UserService) { }
 
-    // async handleCreate({ body }: Request, { json }: Response) {
+    async handleCreate(request: Request, response: Response) {
 
-    //     const { name, postCounter } = body
+        const { name, postCounter }: RequestCreateUser = request.body
 
-    //     const user = await this.userService.createUser({ name, postCounter })
+        const user = await this.userService.createUser({ name, postCounter, joinDate: new Date() })
 
-    //     return json(user)
-    // }
+        return response.json(user)
+    }
 
-    // async handleLoadUser({ body }: Request, { json }: Response) {
+    async handleLoadUser(request: Request, response: Response) {
 
-    //     const { userId } = body
+        const { userId } = request.body
 
-    //     const user = await this.userService.loadUser(userId);
+        const user = await this.userService.loadUser(userId);
 
-    //     return json(user);
+        return response.json(user)
 
-    // }
+    }
 
 
     // async handleUpdatePostCounter({ body }: Request, { json }: Response) {

@@ -12,7 +12,7 @@ class PostRepositories implements IPostRepositories {
                 data: {
                     userId,
                     postContent,
-                    created_at: new Date()
+                    created_at
                 }
             })
 
