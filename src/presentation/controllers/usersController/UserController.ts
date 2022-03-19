@@ -1,4 +1,5 @@
 import { UserService } from '@/module/usecases/users/UserService'
+import { userSchemaValidate } from '@/utils/schema/users.schema'
 import { Users } from '@prisma/client'
 import { Request, Response } from 'express'
 
@@ -14,9 +15,16 @@ class UserController {
 
         const { name, postCounter }: RequestCreateUser = request.body
 
+        const validateUser = await userSchemaValidate.validateAsync(request.body)
+
+        console.log(validateUser);
+
         const user = await this.userService.createUser({ name, postCounter, joinDate: new Date() })
 
-        return response.json(user)
+        return response.status(201).json({
+            result: 'ok',
+            data: user
+        })
     }
 
     async handleLoadUser(request: Request, response: Response) {
@@ -25,18 +33,11 @@ class UserController {
 
         const user = await this.userService.loadUser(userId);
 
-        return response.json(user)
+        return response.status(201).json({
+            result: 'ok',
+            data: user
+        })
 
     }
-
-
-    // async handleUpdatePostCounter({ body }: Request, { json }: Response) {
-    //     const { postCounter, id: userId } = body;
-
-    //     const count = await this.userService.updatePostCounter(postCounter, userId);
-    //     return count;
-    // }
-
-
 }
 export { UserController }

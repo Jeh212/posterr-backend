@@ -11,8 +11,7 @@ class FollowingService {
 
   async createFollowing({
     userId,
-    followingId,
-    created_at = new Date
+    followingId
   }: Omit<Following, 'id'>): Promise<Following> {
 
     if (userId === followingId) {
@@ -27,8 +26,7 @@ class FollowingService {
 
     const follow = await this.followRepository.createFollowing({
       userId,
-      followingId,
-      created_at
+      followingId
     })
 
     return follow

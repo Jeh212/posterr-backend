@@ -1,6 +1,6 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IFollowRepository } from "@/repositories/prisma/protocols/users/repositories/IFollowRepository";
-import { InternalServerError } from "@/utils/Errors";
+// import { InternalServerError } from "@/utils/Errors";
 import { Following, Users } from "@prisma/client";
 
 
@@ -12,7 +12,7 @@ class FollowRepository implements IFollowRepository {
         try {
             const following = await prismaClient.following.create({
                 data: {
-                    created_at,
+                    created_at: new Date(),
                     followingId,
                     userId
                 }
@@ -21,7 +21,7 @@ class FollowRepository implements IFollowRepository {
             return following;
 
         } catch (error) {
-            throw new InternalServerError(error)
+            // throw new InternalServerError(error)
         }
 
     }

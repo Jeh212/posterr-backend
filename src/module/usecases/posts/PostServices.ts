@@ -1,4 +1,4 @@
-import { PostRepositories } from '@/repositories/prisma/posts'
+import { PostRepositories, QuotePostRepositories } from '@/repositories/prisma/posts'
 import { compareOlderDate, compareRecentDate, dateFormater } from '../../../utils/dataFormater'
 import { Posts } from '@prisma/client'
 import { UserRepository } from '@/repositories/prisma/users'
@@ -7,29 +7,31 @@ class PostServices {
 
   constructor(
     private readonly postRepositories: PostRepositories,
-    private readonly userRepositories: UserRepository
+    private readonly userRepositories: UserRepository,
   ) { }
 
-  async createPost({ userId, postContent, created_at }: Omit<Posts, 'id'>): Promise<Posts> {
 
-    const findUserIfExists = await this.userRepositories.load(userId)
-    console.log(findUserIfExists);
 
-    if (!findUserIfExists) {
+  async createPost({ userId, postContent }: Omit<Posts, 'id'>): Promise<Posts> {
+
+    const user = await this.userRepositories.load(userId)
+
+    if (!user) {
       throw new Error('User not found')
     }
-    if (findUserIfExists.postCounter >= 5) {
+    if (user.postCounter >= 5) {
       throw new Error('User can not post more than 5 post a day')
     }
 
-    const createPost = await this.postRepositories.createPost({ userId, postContent, created_at })
+    const createPost = await this.postRepositories.createPost({
+      userId,
+      postContent
+    })
 
-
-
-    const result = await this.userRepositories.updatePostCounter(findUserIfExists.postCounter + 1, findUserIfExists.id)
-
+    await this.userRepositories.updatePostCounter(user.postCounter + 1, user.id);
 
     return createPost
+
   }
 
   async loadRecentPosts(userId: string): Promise<Posts[] | null> {
@@ -45,6 +47,7 @@ class PostServices {
   }
 
   async loadOlderPosts(userId: string): Promise<Posts[] | null> {
+
     if (!userId) {
       throw new Error('User id required')
     }

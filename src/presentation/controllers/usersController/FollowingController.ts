@@ -9,11 +9,14 @@ class FollowingController {
     constructor(private followingService: FollowingService) { }
 
     async handleCreateFollowing(request: Request, response: Response) {
-        const { userId, created_at, followingId } = request.body
+        const { userId, followingId } = request.body
 
-        const following = await this.followingService.createFollowing({ userId, created_at, followingId })
+        const following = await this.followingService.createFollowing({ userId, followingId })
 
-        return response.json(following)
+        return response.status(201).json({
+            result: 'ok',
+            data: following
+        })
     }
 
     async handleUnfollow(request: Request, response: Response) {
@@ -29,7 +32,10 @@ class FollowingController {
         const { userId } = request.params
         const listFollowing = await this.followingService.listFollowing(userId);
 
-        return response.status(200).json(listFollowing)
+        return response.status(201).json({
+            result: 'ok',
+            data: listFollowing
+        })
     }
 
 }

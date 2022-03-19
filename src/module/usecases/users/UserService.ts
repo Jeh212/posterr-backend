@@ -5,9 +5,9 @@ class UserService {
 
   constructor(private readonly userRespository: UserRepository) { }
 
-  async createUser({ name, postCounter, joinDate }: Omit<Users, 'id'>): Promise<Users> {
+  async createUser({ name, postCounter }: Omit<Users, 'id'>): Promise<Users> {
 
-    const user = await this.userRespository.createUser({ name, postCounter, joinDate })
+    const user = await this.userRespository.createUser({ name, postCounter })
     return user
   }
 

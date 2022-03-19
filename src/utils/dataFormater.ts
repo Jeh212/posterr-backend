@@ -8,12 +8,12 @@ export function dateFormater(date: Date) {
 }
 
 export function compareRecentDate(data: Posts[] | null): Posts[] {
+
   const sorted: Posts[] = _.orderBy(
     data,
     [element => element.created_at],
     ['desc']
   )
-
   return sorted
 }
 

@@ -1,25 +1,25 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IUserRepository } from "@/repositories/prisma/protocols/users/repositories/IUserRepository";
-import { InternalServerError } from "@/utils/Errors";
+// import { InternalServerError } from "@/utils/Errors";
 import { Users } from "@prisma/client";
 
 
 class UserRepository implements IUserRepository {
-    async createUser({ name, postCounter, joinDate }: Omit<Users, 'id'>): Promise<Users> {
+    async createUser({ name, postCounter }: Omit<Users, 'id'>): Promise<Users> {
 
         try {
+
             const user = await prismaClient.users.create({
                 data: {
                     name,
                     postCounter,
-                    joinDate
+                    joinDate: new Date()
                 }
             })
 
             return user
         } catch (error) {
             throw new InternalServerError(error)
-
         }
     }
     async load(userId: string): Promise<Users | null> {
@@ -39,7 +39,6 @@ class UserRepository implements IUserRepository {
     }
     async updatePostCounter(postCounter: number, id: string): Promise<number> {
         try {
-            console.log('postCounter', postCounter);
 
             const updateCount = await prismaClient.users.update({ data: { postCounter }, where: { id } })
 

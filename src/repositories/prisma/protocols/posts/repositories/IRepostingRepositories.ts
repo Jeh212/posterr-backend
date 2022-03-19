@@ -4,8 +4,9 @@ interface IRepostingRepositories {
     createReposting: ({
         userId,
         created_at,
-        postId
+        postId,
     }: ReTweets) => Promise<ReTweets>
+    listRetweets: (userId: string) => Promise<ReTweets[]>
 }
 
 export { IRepostingRepositories }

@@ -4,7 +4,7 @@ import { Posts } from "@prisma/client";
 import { Request, Response } from "express";
 
 
-type RequestPosts = Pick<Posts, "postContent" | "userId" | "created_at">
+type RequestPosts = Pick<Posts, "postContent" | "userId">
 type RequestLoadRecentPost = Pick<Posts, "userId">
 
 
@@ -17,10 +17,13 @@ export class PostController {
 
         const { postContent, userId }: RequestPosts = request.body;
 
-        const createUser = await this.postServices.createPost({ postContent, userId, created_at: new Date() });
+        const createUser = await this.postServices.createPost({ postContent, userId });
 
 
-        return response.status(201).json(createUser)
+        return response.status(201).json({
+            result: 'ok',
+            data: createUser
+        })
     }
 
     async handleLoadRecentPosts(request: Request, response: Response) {
@@ -35,7 +38,10 @@ export class PostController {
 
         const formatedData = dateFormaterPosts(loadUserRecentPosts)
 
-        return response.status(200).json(formatedData)
+        return response.status(201).json({
+            result: 'ok',
+            data: formatedData
+        })
 
     }
 
@@ -51,8 +57,11 @@ export class PostController {
 
         const formatedData = dateFormaterPosts(olderPost)
 
-        return response.json(formatedData)
 
+        return response.status(201).json({
+            result: 'ok',
+            data: formatedData
+        })
     }
 
 }
