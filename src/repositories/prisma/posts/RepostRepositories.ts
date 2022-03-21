@@ -1,13 +1,12 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IRepostingRepositories } from "@/repositories/prisma/protocols/posts/repositories/IRepostingRepositories";
-// import { InternalServerError } from "@/utils/Errors";
+import { ApiError } from "@/utils/Errors";
 import { ReTweets } from "@prisma/client";
 
 
 class RepostRepositories implements IRepostingRepositories {
 
     async createReposting({ userId, postId }: Omit<ReTweets, 'id'>): Promise<ReTweets> {
-
         try {
             const repost = await prismaClient.reTweets.create({
                 data: {
@@ -16,11 +15,9 @@ class RepostRepositories implements IRepostingRepositories {
                     postId
                 }
             })
-
             return repost
-        } catch (error) {
-            throw new Error('Error repost a post')
-            // throw new InternalServerError(error)
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
 
@@ -32,9 +29,8 @@ class RepostRepositories implements IRepostingRepositories {
                 }
             });
             return repost
-        } catch (error) {
-            throw new Error('Error repost a post')
-            // throw new InternalServerError(error)
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
 }

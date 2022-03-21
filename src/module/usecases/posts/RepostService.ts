@@ -1,6 +1,7 @@
 
 import { RepostRepositories } from '@/repositories/prisma/posts'
 import { UserRepository } from '@/repositories/prisma/users'
+import { ApiError } from '@/utils/Errors'
 import { ReTweets } from '@prisma/client'
 
 class RepostService {
@@ -14,7 +15,8 @@ class RepostService {
     const user = await this.userRepositories.load(userId)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new ApiError('Not Found: User not found', 404)
+
     }
 
     if (user.postCounter >= 5) {
@@ -36,7 +38,7 @@ class RepostService {
     const list = await this.repostRepositories.listRetweets(userId);
 
     if (list === []) {
-      throw new Error('There isnt anything to show')
+      throw new ApiError('Not Found: There is nothing to show', 404)
     }
 
     return list;

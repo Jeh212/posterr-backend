@@ -8,12 +8,6 @@ const postRouter = Router();
 
 const postController = postFactories();
 
-postRouter.get('/live', (request: Request, response: Response) => {
-    response.json({
-        status: 200,
-        data: 'Livee!'
-    })
-})
 
 postRouter.post('/create', (request, response) => {
     postController.handleCreate(request, response)

@@ -1,4 +1,5 @@
 import { FollowRepository, UserRepository } from '@/repositories/prisma/users'
+import { ApiError } from '@/utils/Errors';
 import { Following, Users } from '@prisma/client'
 
 class FollowingService {
@@ -14,14 +15,20 @@ class FollowingService {
     followingId
   }: Omit<Following, 'id'>): Promise<Following> {
 
+    const findUserIfExist = await this.userRepositories.load(userId);
+
+    if (!findUserIfExist) {
+      throw new ApiError('Not Found: User not found!', 400)
+    }
+
     if (userId === followingId) {
-      throw new Error('Cannot follow yourself')
+      throw new ApiError('Bad Request: Cannot follow yourself', 400)
     }
 
     const alreadyFollowing = await this.followRepository.includesFollowing(followingId, userId);
 
     if (alreadyFollowing) {
-      throw new Error('Already following this user')
+      throw new ApiError('Bad Request: Already following this user', 400)
     }
 
     const follow = await this.followRepository.createFollowing({
@@ -39,7 +46,7 @@ class FollowingService {
     );
 
     if (!findFollowingUser) {
-      throw new Error('User not Found')
+      throw new ApiError('Not Found: Not followign this user!', 404)
     }
 
     const unfollowed = await this.followRepository.removeFollowing(
@@ -60,22 +67,55 @@ class FollowingService {
     const newFollowingList = [];
 
     if (following.length === 0) {
-      throw new Error('There is not any following yet!')
+      throw new ApiError('Bad Request: There is not any following yet!', 400)
     }
 
     for (let i = 0; i < following.length; i++) {
 
       const user = await this.userRepositories.load(following[i].followingId);
 
+
       const newObj = {
-        ...following[i],
-        followingId: user
+        id: following[i].id,
+        userId: following[i].userId,
+        created_at: following[i].created_at,
+        followingInfo: user
       }
 
       newFollowingList.push(newObj)
     }
 
     return newFollowingList
+
+  }
+  async listFollowers(followingId: string): Promise<any> {
+
+    const followers = await this.followRepository.listFollowers(followingId);
+
+    const newFollowerList = [];
+
+    if (followers.length === 0) {
+      throw new ApiError('Bad Request: There is not any following yet!', 400)
+    }
+
+    for (let i = 0; i < followers.length; i++) {
+
+      const user = await this.userRepositories.load(followers[i].userId);
+
+      const newObj = {
+        id: followers[i].id,
+        userId: followers[i].userId,
+        created_at: followers[i].created_at,
+        followersInfo: {
+          id: user?.id,
+          name: user?.name,
+          joinDate: user?.joinDate
+        }
+      }
+      newFollowerList.push(newObj)
+    }
+
+    return newFollowerList
 
   }
 }

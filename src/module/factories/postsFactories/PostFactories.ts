@@ -1,6 +1,6 @@
 import { PostServices } from "@/module/usecases/posts/PostServices"
 import { PostController } from "@/presentation/controllers/postController/PostController"
-import { PostRepositories, QuotePostRepositories } from "@/repositories/prisma/posts"
+import { PostRepositories } from "@/repositories/prisma/posts"
 import { UserRepository } from "@/repositories/prisma/users";
 
 

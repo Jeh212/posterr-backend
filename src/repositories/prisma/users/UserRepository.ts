@@ -1,6 +1,6 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IUserRepository } from "@/repositories/prisma/protocols/users/repositories/IUserRepository";
-// import { InternalServerError } from "@/utils/Errors";
+import { ApiError } from "@/utils/Errors";
 import { Users } from "@prisma/client";
 
 
@@ -18,8 +18,8 @@ class UserRepository implements IUserRepository {
             })
 
             return user
-        } catch (error) {
-            throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
     async load(userId: string): Promise<Users | null> {
@@ -30,8 +30,8 @@ class UserRepository implements IUserRepository {
                 }
             })
             return user
-        } catch (error) {
-            throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
 
 
@@ -43,11 +43,12 @@ class UserRepository implements IUserRepository {
             const updateCount = await prismaClient.users.update({ data: { postCounter }, where: { id } })
 
             if (updateCount.postCounter !== postCounter) {
-                throw Error('Was not able to count!')
-            }
+                throw new ApiError('Bad Request: Was not able to count!', 500)
+            };
+
             return updateCount.postCounter
-        } catch (error) {
-            throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
 
     }

@@ -1,7 +1,8 @@
 import { UserService } from '@/module/usecases/users/UserService'
+import { ApiError } from '@/utils/Errors'
 import { userSchemaValidate } from '@/utils/schema/users.schema'
 import { Users } from '@prisma/client'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 
 type RequestCreateUser = Pick<Users, "postCounter" | "name">
@@ -13,30 +14,44 @@ class UserController {
 
     async handleCreate(request: Request, response: Response) {
 
-        const { name, postCounter }: RequestCreateUser = request.body
+        try {
+            const { name, postCounter }: RequestCreateUser = request.body
 
-        const validateUser = await userSchemaValidate.validateAsync(request.body)
+            await userSchemaValidate.validateAsync(request.body)
+                .catch((reason) => { throw new ApiError(reason.message, 403) })
 
-        console.log(validateUser);
+            const user = await this.userService.createUser({ name, postCounter, joinDate: new Date() })
 
-        const user = await this.userService.createUser({ name, postCounter, joinDate: new Date() })
+            return response.status(201).json({
+                result: 'ok',
+                statusCode: 201,
+                data: user
+            });
 
-        return response.status(201).json({
-            result: 'ok',
-            data: user
-        })
+        } catch (err: any) {
+            return response.status(err.statusCode).json({
+                result: err
+            })
+        }
     }
 
     async handleLoadUser(request: Request, response: Response) {
 
-        const { userId } = request.body
+        try {
+            const { userId } = request.body
 
-        const user = await this.userService.loadUser(userId);
+            const user = await this.userService.loadUser(userId);
 
-        return response.status(201).json({
-            result: 'ok',
-            data: user
-        })
+            return response.status(200).json({
+                result: 'ok',
+                statusCode: 200,
+                data: user
+            })
+        } catch (err: any) {
+            return response.status(err.statusCode).json({
+                result: err
+            })
+        }
 
     }
 }

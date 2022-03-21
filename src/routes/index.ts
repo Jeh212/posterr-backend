@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response, Handler, NextFunction } from 'express';
 
 import { postRouter } from './posts/posts.routes';
 import { followingRouter } from './users/following.routes';
@@ -17,7 +17,6 @@ import { userRouter } from './users/users.routes';
 export const routes = Router();
 
 
-
 /**
  * @name Users
  * @argument Call api for users
@@ -25,7 +24,7 @@ export const routes = Router();
  * 
  */
 
-routes.use('/users/follwing', followingRouter)
+routes.use('/users', followingRouter)
 routes.use('/users', userRouter)
 
 /**

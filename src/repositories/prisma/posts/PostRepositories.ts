@@ -3,6 +3,7 @@ import { Posts } from "@prisma/client";
 // import { InternalServerError } from "@/utils/Errors";
 
 import { prismaClient } from "@/infra/database/prismaClient";
+import { ApiError } from "@/utils/Errors";
 
 class PostRepositories implements IPostRepositories {
 
@@ -17,8 +18,8 @@ class PostRepositories implements IPostRepositories {
             })
 
             return post
-        } catch (error) {
-            throw new Error('Error creating a post')
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
     async loadRecentPosts(userId: string): Promise<Posts[] | []> {
@@ -36,11 +37,11 @@ class PostRepositories implements IPostRepositories {
                 }
             })
             return loadPost
-        } catch (error) {
-            throw new Error('Error load recent posts')
-            // throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
+
     async loadOlderPosts(userId: string): Promise<Posts[] | []> {
 
         try {
@@ -57,9 +58,8 @@ class PostRepositories implements IPostRepositories {
                 }
             })
             return loadPost
-        } catch (error) {
-            throw new Error('Error load older  posts')
-            // throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
 

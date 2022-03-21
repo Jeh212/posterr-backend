@@ -3,6 +3,7 @@ import { IQuotePostRepositories } from "@/repositories/prisma/protocols/posts/re
 import { QuotePosts } from "@prisma/client";
 
 import { prismaClient } from "@/infra/database/prismaClient";
+import { ApiError } from "@/utils/Errors";
 
 
 class QuotePostRepositories implements IQuotePostRepositories {
@@ -10,13 +11,18 @@ class QuotePostRepositories implements IQuotePostRepositories {
 
     async list(userId: string): Promise<QuotePosts[]> {
 
-        const listQuote = await prismaClient.quotePosts.findMany({
-            where: {
-                userId
-            }
-        });
+        try {
+            const listQuote = await prismaClient.quotePosts.findMany({
+                where: {
+                    userId
+                }
+            });
 
-        return listQuote
+            return listQuote
+
+        } catch (error) {
+            throw new ApiError('Internal Server Error', 500)
+        }
     }
 
     async create({ postId, userComment, userId }: Omit<QuotePosts, "id">): Promise<QuotePosts> {
@@ -30,11 +36,11 @@ class QuotePostRepositories implements IQuotePostRepositories {
                     created_at: new Date()
                 }
             })
-            return quote
-        } catch (error) {
-            // throw new InternalServerError(error)
-            throw new Error('Error creating a Quotepost')
 
+            return quote
+
+        } catch (error) {
+            throw new ApiError('Internal Server Error', 500)
         }
     }
 }

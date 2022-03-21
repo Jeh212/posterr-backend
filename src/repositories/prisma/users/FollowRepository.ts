@@ -1,5 +1,6 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IFollowRepository } from "@/repositories/prisma/protocols/users/repositories/IFollowRepository";
+import { ApiError } from "@/utils/Errors";
 // import { InternalServerError } from "@/utils/Errors";
 import { Following, Users } from "@prisma/client";
 
@@ -7,7 +8,7 @@ import { Following, Users } from "@prisma/client";
 class FollowRepository implements IFollowRepository {
 
 
-    async createFollowing({ userId, followingId, created_at }: Omit<Following, 'id'>): Promise<Following> {
+    async createFollowing({ userId, followingId }: Omit<Following, 'id'>): Promise<Following> {
 
         try {
             const following = await prismaClient.following.create({
@@ -20,24 +21,28 @@ class FollowRepository implements IFollowRepository {
 
             return following;
 
-        } catch (error) {
-            // throw new InternalServerError(error)
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
         }
 
     }
 
     async getFollowing(followingId: string): Promise<Following | null> {
 
+        try {
+            const following = await prismaClient.following.findFirst({
+                where: {
+                    followingId
+                }
+            })
 
-        const following = await prismaClient.following.findFirst({
-            where: {
-                followingId
-            }
-        })
+            return following
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
 
-        return following
+        }
+
     };
-
     async removeFollowing(followingId: string): Promise<string> {
 
         try {
@@ -47,26 +52,53 @@ class FollowRepository implements IFollowRepository {
                 }
             })
             return removeFollowing.followingId
-        } catch (error) {
-            console.log(error);
-            throw new Error()
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
         }
 
     }
     async listFollowing(userId: string): Promise<Following[] | []> {
 
-        return await prismaClient.following.findMany({ take: 10, where: { userId } });
+        try {
+            const following = await prismaClient.following.findMany({ where: { userId } })
+
+            return following;
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
+        }
+
     }
 
     async includesFollowing(followingId: string, userId: string): Promise<Following | null> {
 
-        const getFollowing = await prismaClient.following.findFirst({
-            where: {
-                userId,
-                AND: [{ followingId }]
-            }
-        })
-        return getFollowing;
+        try {
+            const getFollowing = await prismaClient.following.findFirst({
+                where: {
+                    userId,
+                    AND: [{ followingId }]
+                }
+            })
+            return getFollowing;
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
+        }
     }
+
+    async listFollowers(followingId: string): Promise<Following[]> {
+
+        try {
+            const followers = await prismaClient.following.findMany({
+                where: {
+                    followingId
+                }
+            })
+
+            return followers
+        } catch (err) {
+            throw new ApiError('Internal Server Error', 500)
+        }
+    }
+
+
 }
 export { FollowRepository }

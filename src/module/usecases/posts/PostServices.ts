@@ -2,6 +2,7 @@ import { PostRepositories, QuotePostRepositories } from '@/repositories/prisma/p
 import { compareOlderDate, compareRecentDate, dateFormater } from '../../../utils/dataFormater'
 import { Posts } from '@prisma/client'
 import { UserRepository } from '@/repositories/prisma/users'
+import { ApiError } from '@/utils/Errors'
 
 class PostServices {
 
@@ -17,10 +18,11 @@ class PostServices {
     const user = await this.userRepositories.load(userId)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new ApiError('Not Found: User not found', 404)
     }
+
     if (user.postCounter >= 5) {
-      throw new Error('User can not post more than 5 post a day')
+      throw new ApiError('Bad Request: User can not post more than 5 posts a day', 400)
     }
 
     const createPost = await this.postRepositories.createPost({
@@ -37,8 +39,9 @@ class PostServices {
   async loadRecentPosts(userId: string): Promise<Posts[] | null> {
 
     if (!userId) {
-      throw new Error('User id required')
+      throw new ApiError('Bad Request: User id required', 400)
     }
+
     const loadPost = await this.postRepositories.loadRecentPosts(userId)
 
     const sortedPost = compareRecentDate(loadPost)
@@ -49,8 +52,9 @@ class PostServices {
   async loadOlderPosts(userId: string): Promise<Posts[] | null> {
 
     if (!userId) {
-      throw new Error('User id required')
+      throw new ApiError('Bad Request: User id required', 400)
     }
+
     const loadPost = await this.postRepositories.loadOlderPosts(userId)
 
     const sortedPost = compareOlderDate(loadPost)

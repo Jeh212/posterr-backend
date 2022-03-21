@@ -1,19 +1,16 @@
 
 
-// class ApiError {
 
-//     constructor(private code: number, private message: string) {
-//         this.code = code;
-//         this.message = message;
-//     }
 
-//     static badRequest(msg: string) {
-//         return new ApiError(400, msg)
-//     }
 
-//     static InternalServerError(msg: string) {
-//         return new ApiError(500, msg)
-//     }
+export class ApiError {
+    public readonly message: string;
 
-// }
-// export { ApiError }
+    public readonly statusCode: number;
+    constructor(
+        message: string, statusCode = 400
+    ) {
+        this.message = message;
+        this.statusCode = statusCode;
+    }
+}

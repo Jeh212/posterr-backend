@@ -1,5 +1,6 @@
 import { QuotePostRepositories } from '@/repositories/prisma/posts'
 import { UserRepository } from '@/repositories/prisma/users'
+import { ApiError } from '@/utils/Errors'
 import { QuotePosts } from '@prisma/client'
 
 class QuotePostService {
@@ -17,11 +18,11 @@ class QuotePostService {
     const user = await this.userRepositories.load(userId)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new ApiError('Not Found: User not found', 404)
     }
 
     if (user.postCounter >= 5) {
-      throw new Error('User can not post more than 5 post a day')
+      throw new ApiError('Bad Request: User can not post more than 5 posts a day', 400)
     }
 
     const quote = await this.quotePostRepositories.create({
@@ -38,7 +39,7 @@ class QuotePostService {
   async listQuote(userId: string): Promise<QuotePosts[]> {
 
     if (!userId) {
-      throw new Error('User id can not be undefined!')
+      throw new ApiError('Not Found: User not found', 404)
     }
 
     const quotes = await this.quotePostRepositories.list(userId);

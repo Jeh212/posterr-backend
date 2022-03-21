@@ -1,9 +1,14 @@
-import { UserRepository } from '@/repositories/prisma/users'
+import { FollowRepository, UserRepository } from '@/repositories/prisma/users'
+import { ApiError } from '@/utils/Errors'
 import { Users } from '@prisma/client'
 
 class UserService {
 
-  constructor(private readonly userRespository: UserRepository) { }
+  constructor(
+    private readonly userRespository: UserRepository,
+    private readonly followRepository: FollowRepository,
+
+  ) { }
 
   async createUser({ name, postCounter }: Omit<Users, 'id'>): Promise<Users> {
 
@@ -12,16 +17,31 @@ class UserService {
   }
 
   async loadUser(userId: string): Promise<Users | undefined> {
+
     if (!userId) {
-      new Error('User is Required')
+      throw new ApiError('Bad Request: UserId required', 400)
     }
+
     const loadUser = await this.userRespository.load(userId);
 
     if (!loadUser) {
-      throw new Error('not found')
+      throw new ApiError('Not Found: User not Found', 404)
     }
 
-    return loadUser
+    const loadFollowing = await this.followRepository.listFollowing(userId)
+
+    const loadFollowers = await this.followRepository.listFollowers(userId)
+
+
+    const user = {
+
+      ...loadUser,
+      following: loadFollowing ? loadFollowing.length : 0,
+      followers: loadFollowers ? loadFollowers.length : 0
+
+    }
+
+    return user
   }
 
   async updatePostCounter(postCounter: number, id: string): Promise<number> {
