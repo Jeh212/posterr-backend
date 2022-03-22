@@ -22,6 +22,7 @@ class UserRepository implements IUserRepository {
             throw new ApiError('Internal Server Error', 500)
         }
     }
+
     async load(userId: string): Promise<Users | null> {
         try {
             const user = await prismaClient.users.findUnique({
@@ -53,6 +54,21 @@ class UserRepository implements IUserRepository {
 
     }
 
+    async alreadyTakenUser(name: string): Promise<Users | null> {
+
+        try {
+            const user = await prismaClient.users.findFirst({
+                where: {
+                    name
+                }
+            });
+
+            return user
+        } catch (err: any) {
+            throw new ApiError('Internal Server Error', 500)
+        }
+
+    }
 }
 
 export { UserRepository }

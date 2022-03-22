@@ -15,12 +15,14 @@ class UserController {
     async handleCreate(request: Request, response: Response) {
 
         try {
+
             const { name, postCounter }: RequestCreateUser = request.body
 
             await userSchemaValidate.validateAsync(request.body)
                 .catch((reason) => { throw new ApiError(reason.message, 403) })
 
-            const user = await this.userService.createUser({ name, postCounter, joinDate: new Date() })
+
+            const user = await this.userService.createUser({ name: `@${name}`, postCounter, joinDate: new Date() })
 
             return response.status(201).json({
                 result: 'ok',

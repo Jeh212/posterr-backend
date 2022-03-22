@@ -12,7 +12,14 @@ class UserService {
 
   async createUser({ name, postCounter }: Omit<Users, 'id'>): Promise<Users> {
 
+    const takenUserName = await this.userRespository.alreadyTakenUser(name);
+
+    if (takenUserName) {
+      throw new ApiError(`Bad Request: This name '${name}' has been already taken, try another one!`, 400)
+    }
+
     const user = await this.userRespository.createUser({ name, postCounter })
+
     return user
   }
 
