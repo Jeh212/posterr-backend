@@ -1,4 +1,5 @@
 import { QuotePostService } from "@/module/usecases/posts/QuotePostService";
+import { dateFormater } from "@/utils/dataFormater";
 import { ApiError } from "@/utils/Errors";
 import { quoteSchemaValidate } from "@/utils/schema/quote.schema";
 import { QuotePosts } from "@prisma/client";
@@ -30,7 +31,10 @@ class QuotePostController {
             return response.status(201).json({
                 result: 'ok',
                 statusCode: 201,
-                data: quote
+                data: {
+                    ...quote,
+                    created_at: dateFormater(quote.created_at)
+                }
             })
 
         } catch (err: any) {

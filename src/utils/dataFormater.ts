@@ -2,7 +2,7 @@ import { Posts } from '@prisma/client'
 import { format } from 'date-fns'
 import _ from 'lodash'
 
-export function dateFormater(date: Date) {
+export function dateFormater(date: any) {
   const newDate = format(new Date(date), 'PPPP')
   return newDate
 }

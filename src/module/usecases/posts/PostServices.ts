@@ -27,7 +27,8 @@ class PostServices {
 
     const createPost = await this.postRepositories.createPost({
       userId,
-      postContent
+      postContent,
+      created_at: new Date()
     })
 
     await this.userRepositories.updatePostCounter(user.postCounter + 1, user.id);

@@ -1,4 +1,5 @@
 import { FollowRepository, UserRepository } from '@/repositories/prisma/users'
+import { dateFormater } from '@/utils/dataFormater';
 import { ApiError } from '@/utils/Errors';
 import { Following, Users } from '@prisma/client'
 
@@ -78,8 +79,11 @@ class FollowingService {
       const newObj = {
         id: following[i].id,
         userId: following[i].userId,
-        created_at: following[i].created_at,
-        followingInfo: user
+        created_at: dateFormater(following[i].created_at),
+        followingInfo: {
+          ...user,
+          joinDate: dateFormater(user?.joinDate)
+        }
       }
 
       newFollowingList.push(newObj)
@@ -105,13 +109,14 @@ class FollowingService {
       const newObj = {
         id: followers[i].id,
         userId: followers[i].userId,
-        created_at: followers[i].created_at,
+        created_at: dateFormater(followers[i].created_at),
         followersInfo: {
           id: user?.id,
           name: user?.name,
-          joinDate: user?.joinDate
+          joinDate: dateFormater(user?.joinDate)
         }
       }
+
       newFollowerList.push(newObj)
     }
 

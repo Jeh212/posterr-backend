@@ -1,4 +1,5 @@
 import { FollowingService } from "@/module/usecases/users/FollowingService";
+import { dateFormater } from "@/utils/dataFormater";
 import { Request, Response } from "express";
 
 
@@ -18,7 +19,10 @@ class FollowingController {
             return response.status(201).json({
                 result: 'ok',
                 statusCode: 201,
-                data: following
+                data: {
+                    ...following,
+                    created_at: dateFormater(following.created_at)
+                }
             })
 
         } catch (err: any) {
@@ -58,6 +62,7 @@ class FollowingController {
                 statusCode: 200,
                 data: listFollowing
             })
+
         } catch (err: any) {
             return response.status(err.statusCode).json({
                 result: err

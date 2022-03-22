@@ -1,5 +1,6 @@
 import { QuotePostRepositories } from '@/repositories/prisma/posts'
 import { UserRepository } from '@/repositories/prisma/users'
+import { dateFormater } from '@/utils/dataFormater'
 import { ApiError } from '@/utils/Errors'
 import { QuotePosts } from '@prisma/client'
 
@@ -38,13 +39,22 @@ class QuotePostService {
 
   async listQuote(userId: string): Promise<QuotePosts[]> {
 
-    if (!userId) {
+    const user = await this.userRepositories.load(userId)
+
+
+    if (!user) {
       throw new ApiError('Not Found: User not found', 404)
     }
 
+    const newArray: QuotePosts[] = [];
+
+
     const quotes = await this.quotePostRepositories.list(userId);
 
-    return quotes
+
+    quotes.forEach(quote => newArray.push({ ...quote, created_at: dateFormater(quote.created_at) }))
+
+    return newArray
   }
 }
 

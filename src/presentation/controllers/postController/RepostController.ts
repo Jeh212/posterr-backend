@@ -1,4 +1,5 @@
 import { RepostService } from "@/module/usecases/posts/RepostService";
+import { dateFormater } from "@/utils/dataFormater";
 import { ApiError } from "@/utils/Errors";
 import { repostSchemaValidate } from "@/utils/schema/repost.schema";
 import { ReTweets } from "@prisma/client";
@@ -23,12 +24,15 @@ class RepostController {
             await repostSchemaValidate.validateAsync(request.body)
                 .catch((reason) => { throw new ApiError(reason.message, 403) })
 
-            const repost = await this.repostService.create({ postId, userId })
+            const repost = await this.repostService.create({ postId, userId, created_at: new Date() })
 
             return response.status(201).json({
                 result: 'ok',
                 statusCode: 201,
-                data: repost
+                data: {
+                    ...repost,
+                    created_at: dateFormater(repost.created_at)
+                }
             })
 
         } catch (err: any) {
