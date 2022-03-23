@@ -1,6 +1,19 @@
 
 # This is a simple steps how to run the project
 
+
+## Warning!!!
+> Docker and docker-compose need to be installed to run the database:
+
+
+## Docker Documentation to install
+    Docker: https://docs.docker.com/engine/install/ubuntu/
+
+    Docker Compose: https://docs.docker.com/compose/install/
+
+
+
+
 1) **Importante dependencies to install and Docker Database**
 
    ```console
@@ -21,13 +34,3 @@
    yarn dev
    ```
 
-
-## Warning!!!
-> Docker and docker-compose need to be installed to run the database:
-
-
-
-## Docker Documentation to install
-    Docker: https://docs.docker.com/engine/install/ubuntu/
-
-    Docker Compose: https://docs.docker.com/compose/install/
