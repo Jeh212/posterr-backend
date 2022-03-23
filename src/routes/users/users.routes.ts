@@ -1,6 +1,6 @@
 
 import { userServiceFactory } from '@/module/factories/userFactories/UserServiceFactory';
-import { Request, Response, Router, Handler, NextFunction } from 'express'
+import { Request, Response, Router } from 'express'
 
 
 const userRouter = Router();

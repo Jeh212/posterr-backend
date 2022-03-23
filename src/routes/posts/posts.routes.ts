@@ -1,6 +1,6 @@
 
 import { postFactories } from '../../module/factories/postsFactories/PostFactories'
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
 
 
 

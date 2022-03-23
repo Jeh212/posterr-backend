@@ -18,7 +18,7 @@ class UserService {
       throw new ApiError(`Bad Request: This name '${name}' has been already taken, try another one!`, 400)
     }
 
-    const user = await this.userRespository.createUser({ name, postCounter })
+    const user = await this.userRespository.createUser({ name, postCounter, joinDate: new Date() })
 
     return user
   }

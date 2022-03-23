@@ -14,7 +14,7 @@ class RepostService {
   async create({ userId, postId }: Omit<ReTweets, 'id'>) {
 
     const user = await this.userRepositories.load(userId)
-    console.log(user);
+
 
     if (!user) {
       throw new ApiError('Not Found: User not found', 404)

@@ -1,8 +1,3 @@
-
-
-
-
-
 export class ApiError {
     public readonly message: string;
 

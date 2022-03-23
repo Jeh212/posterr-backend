@@ -34,7 +34,8 @@ class FollowingService {
 
     const follow = await this.followRepository.createFollowing({
       userId,
-      followingId
+      followingId,
+      created_at: new Date()
     })
 
     return follow

@@ -1,6 +1,6 @@
 
 import { followingServiceFactory } from '@/module/factories/userFactories/FollowingServiceFactory';
-import { NextFunction, Request, Response, Router } from 'express'
+import { Request, Response, Router } from 'express'
 
 
 

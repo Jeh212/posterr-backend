@@ -30,6 +30,7 @@ class QuotePostService {
       userComment,
       postId,
       userId,
+      created_at: new Date()
     })
 
     await this.userRepositories.updatePostCounter(user.postCounter + 1, user.id);

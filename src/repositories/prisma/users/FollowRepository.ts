@@ -1,8 +1,7 @@
 import { prismaClient } from "@/infra/database/prismaClient";
 import { IFollowRepository } from "@/repositories/prisma/protocols/users/repositories/IFollowRepository";
 import { ApiError } from "@/utils/Errors";
-// import { InternalServerError } from "@/utils/Errors";
-import { Following, Users } from "@prisma/client";
+import { Following } from "@prisma/client";
 
 
 class FollowRepository implements IFollowRepository {

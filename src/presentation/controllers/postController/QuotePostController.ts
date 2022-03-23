@@ -26,7 +26,7 @@ class QuotePostController {
             await quoteSchemaValidate.validateAsync(request.body)
                 .catch((reason) => { throw new ApiError(reason.message, 403) })
 
-            const quote = await this.quotePostService.createQuote({ postId, userComment, userId })
+            const quote = await this.quotePostService.createQuote({ postId, userComment, userId, created_at: new Date() })
 
             return response.status(201).json({
                 result: 'ok',
